@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="google-site-verification"
+      content="UWHTkMxkkqv0hsUJcBHWc3ZjLXysHyydwRcO67gs_tk"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">Tasks | MacIdeas</title>
+    <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="tasks.css" />
+    <script
+      src="https://kit.fontawesome.com/196781a711.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="tasks.js"></script>
+  </head>
+  <body>
+    <div class="overflow-menu shoot" id="overflow-menu">
+      <a href="tasks.html" class="olink">Tasks</a>
+      <a href="notes.html" class="olink">Notes</a>
+      <a href="drawings.html" class="olink">Drawings</a>
+      <a href="lists.html" class="olink">Lists</a>
+      <a href="boards.html" class="olink">Boards</a>
+    </div>
+    <nav class="nav">
+      <div class="overflowm shoot" id="overflowm">
+        <img src="bars-solid.svg" alt="Menu" class="shoot" />
+      </div>
+      <a href="/macideas/" class="logo">
+        <img src="macideas-logo.png" alt="MacIdeas Logo" />
+      </a>
+      <a href="tasks.html" class="link">Tasks</a>
+      <a href="notes.html" class="link">Notes</a>
+      <a href="drawings.html" class="link">Drawings</a>
+      <a href="lists.html" class="link">Lists</a>
+      <a href="boards.html" class="link">Boards</a>
+      <div class="select secondselect">
+        <span id="header123">Tabs</span>
+        <ul id="cats">
+          <a href="tasks.html">Tasks</a>
+          <a href="notes.html">Notes</a>
+          <a href="drawings.html">Drawings</a>
+          <a href="lists.html">Lists</a>
+          <a href="boards.html">Boards</a>
+        </ul>
+      </div>
+      <div class="select">
+        <span id="header123">Help</span>
+        <ul id="cats">
+          <a href="/macblog/projects/macideas/">About</a>
+          <a href="/macblog/updates/macideas/">Updates</a>
+          <a href="/macblog/projects/macideas/">Docs</a>
+          <a href="https://forms.gle/fpMRFAcJU28VLpwt9" target="_blank"
+            >Feedback</a
+          >
+        </ul>
+      </div>
+    </nav>
+    <div class="macsidebar" id="sidebar">
+      <a href="/"><img src="/logo.png" alt="" /></a>
+      <a href="/macideas/"><img src="/MacIdeas Logo.png" alt="" /></a>
+      <a href="/maclearn/"><img src="/MacLearn Logo.png" alt="" /></a>
+      <a href="/mactime/"><img src="/MacTime Logo.png" alt="" /></a>
+      <a href="/macvg/"><img src="/MacVG Logo.png" alt="" /></a>
+      <a href="/macblog/"><img src="/MacBlog Logo.png" alt="" /></a>
+    </div>
+    <div class="wrap">
+      <div class="sidebar">
+        <div class="functions">
+          <select class="folders" id="name">
+            <option value="">Folder 1</option>
+          </select>
+          <div class="folderbuttons">
+            <img src="media/plus-solid.svg" id="add" class="add" />
+            <img src="media/ellipsis-vertical-solid.svg" id="folderop" class="add" />
+          </div>
+        </div>
+        <li class="side-item">
+          <span class="name" id="name">Task List 1</span>
+          <img
+            src="media/ellipsis-vertical-solid.svg"
+            class="options"
+            id="options"
+          />
+        </li>
+        <div class="option-menu" id="opmenu">
+          <li id="opedit">
+            <img src="media/pen-solid.svg" class="o-menu-e" />
+            Rename
+          </li>
+          <li id="opdelete">
+            <img src="media/trash-solid.svg" class="o-menu-e" />
+            Delete
+          </li>
+        </div>
+      </div>
+      <div class="main">
+        <div id="tasks">
+          <ul id="task-list"></ul>
+          <form id="tasks-input">
+            <div class="input">
+              <input
+                id="task-input"
+                placeholder="Add tasks here"
+                autocomplete="off"
+                maxlength="250"
+              />
+              <button id="add-task-btn" type="submit">↪</button>
+            </div>
+          </form>
+        </div>
+        <audio id="ding">
+          <source src="/macideas/media/ding.mp3" />
+        </audio>
+      </div>
+    </div>
+    <!--
+      <ul class="list ul" id="list"></ul>
+      <form action="" class="main" id="form">
+        <input type="text" class="text" id="text" />
+        <button class="btn" id="btn">Go</button>
+      </form>
+    -->
+  </body>
+</html>
