@@ -19,57 +19,132 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const note = document.querySelectorAll(".note");
+  const options = document.querySelectorAll(".options");
+  const optionMenu = document.getElementById("opmenu");
+  const opEdit = document.getElementById("opedit");
+  const opDelete = document.getElementById("opdelete");
   const noteContainer = document.querySelector(".note-container");
-  note.forEach(function (element) {
-    element.addEventListener("click", function () {
-      note.forEach(function (element) {
-        element.style.display = "none";
+  const textarea = document.querySelector(".textarea");
+  const statusMessage = document.getElementById("status");
+  let ogstring = window.getComputedStyle(textarea);
+  let ogsize = ogstring.getPropertyValue("font-size");
+  const size = document.getElementById("fontsize");
+  if (localStorage.getItem("note")) {
+    textarea.value = localStorage.getItem("note");
+  }
+  if (localStorage.getItem("notesize")) {
+    textarea.style.fontSize = localStorage.getItem("notesize");
+    size.value = localStorage.getItem("notesize").substring(0,localStorage.getItem("notesize").length - 2);
+  }
+  options.forEach((option) => {
+    let parentName = option.parentElement.querySelector("#name");
+    let optionparentName = localStorage.getItem("notename");
+    if (optionparentName) {
+      parentName.innerText = optionparentName;
+    }
+    option.addEventListener("click", (e) => {
+      let y = e.clientY;
+      optionMenu.style.top = y - 50 + "px";
+      optionMenu.style.visibility = "visible";
+      opEdit.addEventListener("click", () => {
+        parentName.setAttribute("contenteditable", true);
+        parentName.focus();
+        window.setTimeout(function () {
+          let sel, range;
+          if (window.getSelection && document.createRange) {
+            range = document.createRange();
+            range.selectNodeContents(parentName);
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+          } else if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(parentName);
+            range.select();
+          }
+        }, 1);
       });
-      const textarea = document.createElement("textarea");
-      const saveBtn = document.createElement("button");
-      const bar = document.createElement("div");
-      const bold = document.createElement("button");
-      bold.classList.add("tool");
-      bar.classList.add("tool-bar");
-      textarea.classList.add("textarea");
-      saveBtn.classList.add("save-button");
-      saveBtn.innerHTML = "Save Note";
-      bold.innerHTML = "Bold";
-      bold.id = "bold";
-      noteContainer.appendChild(textarea);
-      if (localStorage.getItem("bold") === "yes") {
-        textarea.style.fontWeight = "bold";
-        bold.innerHTML = "Unbold";
-      } else {
-        textarea.style.fontWeight = "normal";
+      parentName.addEventListener("blur", () => {
+        if (parentName.innerText.trim().length == 0) {
+          parentName.innerText = "Untitled Note";
+          parentName.setAttribute("contenteditable", false);
+          localStorage.setItem("notename", parentName.innerText);
+        } else {
+          parentName.setAttribute("contenteditable", false);
+          localStorage.setItem("notename", parentName.innerText);
+        }
+      });
+      opDelete.addEventListener("click", () => {
+        if (
+          confirm(
+            "Are you sure you want to delete this note? All the text will be permenantly deleted."
+          )
+        ) {
+          option.parentElement.style.display = "none";
+        }
+      });
+      parentName.addEventListener("keydown", (e) => {
+        if (e.key == "Enter") {
+          parentName.blur();
+          parentName.setAttribute("contenteditable", false);
+        }
+      });
+    });
+    document.addEventListener("click", (e) => {
+      if (e.target !== optionMenu && e.target !== option) {
+        optionMenu.style.visibility = "hidden";
       }
-      noteContainer.appendChild(bar);
-      bar.appendChild(saveBtn);
-      bar.appendChild(bold);
-      textarea.value = localStorage.getItem("note");
-      saveBtn.addEventListener("click", saveNote);
-      bold.addEventListener("click", bolding);
     });
   });
 
+  let saving = setInterval(() => {
+    saveNote();
+  }, 10000);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.keyCode === 83 && e.ctrlKey) {
+      e.preventDefault();
+      saveNote();
+    }
+  });
+
   function saveNote() {
-    const textarea = noteContainer.querySelector(".textarea");
-    let value = textarea.value;
+    const value = noteContainer.querySelector(".textarea").value;
+    let ogstring = window.getComputedStyle(textarea);
+    let ogsize = ogstring.getPropertyValue("font-size");
     localStorage.setItem("note", value);
+    localStorage.setItem("notesize", ogsize);
+    statusMessage.style.opacity = "1";
+    setTimeout(() => {
+      statusMessage.style.opacity = "0";
+    }, 1500);
   }
 
-  function bolding() {
-    const textarea = noteContainer.querySelector(".textarea");
-    const bold = document.getElementById("bold");
-    if (textarea.style.fontWeight === "bold") {
-      textarea.style.fontWeight = "normal";
-      bold.innerHTML = "Bold";
-      localStorage.setItem("bold", "no");
-    } else {
-      textarea.style.fontWeight = "bold";
-      bold.innerHTML = "Unbold";
-      localStorage.setItem("bold", "yes");
+  const bigger = document.getElementById("bigger");
+  const smaller = document.getElementById("smaller");
+  bigger.addEventListener("click", () => {
+    let ogstring = window.getComputedStyle(textarea);
+    let ogsize = ogstring.getPropertyValue("font-size");
+    let newsize = parseInt(ogsize) + 5;
+    size.value = newsize;
+    textarea.style.fontSize = newsize + "px";
+  });
+  smaller.addEventListener("click", () => {
+    let ogstring = window.getComputedStyle(textarea);
+    let ogsize = ogstring.getPropertyValue("font-size");
+    let newsize = parseInt(ogsize) - 5;
+    size.value = newsize;
+    textarea.style.fontSize = newsize + "px";
+  });
+  size.addEventListener("click", () => {
+    size.focus();
+  });
+  size.addEventListener("keydown", (e) => {
+    if (e.keyCode === 13) {
+      size.blur();
     }
-  }
+  });
+  size.addEventListener("blur", () => {
+    textarea.style.fontSize = size.value + "px";
+  });
 });

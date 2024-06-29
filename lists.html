@@ -10,6 +10,10 @@
     <title id="title">Lists | MacIdeas</title>
     <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="lists.css" />
+    <script
+      src="https://kit.fontawesome.com/196781a711.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="lists.js"></script>
   </head>
   <body>
@@ -62,12 +66,55 @@
       <a href="/macvg/"><img src="/MacVG Logo.png" alt="" /></a>
       <a href="/macblog/"><img src="/MacBlog Logo.png" alt="" /></a>
     </div>
-      <h1 id="header">My List</h1>
-      <div class="wrap" id="wrap">
-        <button class="add" id="add" style="display: flex; align-items: center; justify-content: center;">
-          <img src="media/add.svg" alt="" width="20%" style="margin-inline: 40%; margin-block: 15px;">
-          Add an Item
-        </button>
+    <div class="wrap">
+      <div class="sidebar">
+        <div class="functions">
+          <select class="folders" id="name">
+            <option value="">Folder 1</option>
+          </select>
+          <div class="folderbuttons">
+            <img src="media/plus-solid.svg" id="add" class="add" />
+            <img
+              src="media/ellipsis-vertical-solid.svg"
+              id="folderop"
+              class="add"
+            />
+          </div>
+        </div>
+        <div id="list-panel"></div>
+        <div class="option-menu" id="opmenu">
+          <li id="opedit">
+            <img src="media/pen-solid.svg" class="o-menu-e" />
+            Rename
+          </li>
+          <li id="opdelete">
+            <img src="media/trash-solid.svg" class="o-menu-e" />
+            Delete
+          </li>
+        </div>
       </div>
+      <div class="main">
+        <ul id="list">
+          <img src="media/listshome.png" class="listimg" />
+          <h2 class="welcome">Welcome to MacIdeas Lists!</h2>
+          <p class="directions">
+            Click on a list on the side panel on the right to start viewing,
+            managing, and completing your lists!
+          </p>
+        </ul>
+        <div class="bar-container">
+          <form id="list-form" class="input">
+            <input
+              id="list-input"
+              placeholder="Add list items here"
+              autocomplete="off"
+              maxlength="250"
+              class="bar"
+            />
+            <button type="submit" class="submit-btn">↪</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

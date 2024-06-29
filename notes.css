@@ -269,26 +269,21 @@ body {
   height: 100%;
 }
 
-.side-item {
-  color: white;
-  font-size: 18px;
-  padding-block: 10px;
-  padding-inline: 20px;
-  cursor: pointer;
-  width: 90%;
-  margin-inline: 5%;
-  list-style: none;
-  border-radius: 8px;
-  margin-block: 5px;
-  transition: background-color 0.15s ease;
+.textarea::placeholder {
+  font-style: italic;
+  color: rgb(190, 190, 190);
 }
 
-.side-item:hover {
-  background-color: rgb(22, 22, 22);
+.status {
+  margin-left: auto;
+  opacity: 0;
+  color: gray;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
 }
 
-.side-item:first-of-type {
-  background-color: rgb(22, 22, 22);
+.textarea:focus::placeholder {
+  color: transparent;
 }
 
 .folders {
@@ -316,12 +311,7 @@ body {
   transition: box-shadow 0.3s ease;
 }
 
-.add:hover, .folders:hover {
-  box-shadow: 0px 0px 10px rgb(50, 50, 50);
-}
-
 .main {
-  padding-block: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -338,32 +328,107 @@ body {
   margin-inline: 5%;
 }
 
-.textarea {
-  margin-block: 4px;
-  background-color: rgb(27, 27, 27);
-  padding-inline: 11px;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
-  cursor: text;
-  width: 80%;
-  margin-inline: 10%;
-  height: calc(100vh - 154px);
-  outline: none;
-  background-color: rgb(27, 27, 27);
-  color: white;
-  padding: 40px;
-  resize: none;
+.fontsize {
+  background-color: transparent;
   border: none;
+  outline: none;
+  border-radius: 5px;
+  text-align: center;
+  width: 40px;
+  color: white;
+  transition: background-color 0.15s ease;
+}
+
+.fontsize:hover {
+  background-color: rgb(22, 22, 22);
+}
+
+.textarea {
+  background-color: transparent;
+  border: none;
+  resize: none;
+  width: 100%;
+  outline: none;
+  color: white;
   font-size: 18px;
-  overflow: auto;
+  padding: 50px;
+  height: 99%;
+}
+
+.options {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: content-box;
+  transition: background-color 0.2s ease;
+}
+
+.options:hover {
+  background-color: black;
+}
+.option-menu li {
+  color: white;
+  font-size: 18px;
+  padding-block: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  list-style: none;
+}
+
+.o-menu-e {
+  width: 45px;
+  padding-inline: 15px;
+}
+
+.option-menu li:hover {
+  background-color: rgb(10, 10, 10);
+}
+
+.folders {
+  background-color: rgb(22, 22, 22);
+  border-radius: 8px;
+  border: none;
+  appearance: none;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  padding-block: 10px;
+  padding-inline: 20px;
+  margin: 0;
+  transition: background-color 0.3s ease;
+}
+li {
+  padding-block: 5px;
+  align-items: center;
+}
+.o-menu-e {
+  width: 45px;
+  padding-inline: 15px;
+}
+.option-menu {
+  visibility: hidden;
+  background-color: rgb(22, 22, 22);
+  width: 150px;
+  border-radius: 8px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100px;
+  left: 20.3vw;
+  position: fixed;
 }
 
 .tool-bar {
   width: 80%;
-  margin-inline: 10%;
   position: absolute;
   bottom: 0;
+  justify-content: center;
   display: flex;
+  align-items: center;
 }
 
 .save-button,
@@ -402,38 +467,8 @@ body {
   margin-inline: 2%;
 }
 
-.note {
-  display: flex;
-  justify-content: end;
-  flex-direction: column;
-  margin-inline: 10px;
-  margin-block: 5px;
-  width: 200px;
-  color: white;
-  padding-inline: 10px;
-  font-weight: bold;
-  text-decoration: none;
-  text-align: center;
-  border-radius: 10px;
-  height: 200px;
-  box-shadow: 0 0 2px rgb(134, 134, 134);
-  padding-bottom: 10px;
-  transition: transform 0.3s ease;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: rgb(27, 27, 27);
-  transition: box-shadow 0.2s;
-  cursor: pointer;
-}
-
-.note:hover {
-  box-shadow: 0 0 10px #4ee0f5;
-}
-
-.title {
-  text-align: left;
-  margin-inline: 20px;
-  font-size: 20px;
+.note-container {
+  width: 100%;
 }
 
 .preview {
@@ -456,4 +491,87 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgb(111, 111, 111);
+}
+
+.folderbuttons {
+  background-color: rgb(22, 22, 22);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add {
+  height: 40.6667px !important;
+  width: 40.6667px;
+  background-color: rgb(22, 22, 22);
+  cursor: pointer;
+  border-radius: 8px 0px 0px 8px;
+  padding-block: 10px;
+  padding-inline: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.add:last-of-type {
+  border-radius: 0px 8px 8px 0px;
+}
+
+.add:hover,
+.folders:hover {
+  background-color: black;
+}
+
+.side-item {
+  color: white;
+  font-size: 18px;
+  padding-block: 10px;
+  padding-left: 20px;
+  cursor: pointer;
+  width: 90%;
+  display: flex;
+  margin-inline: 5%;
+  justify-content: space-between;
+  list-style: none;
+  border-radius: 8px;
+  margin-block: 5px;
+  transition: background-color 0.15s ease;
+}
+
+.side-item:hover {
+  background-color: rgb(22, 22, 22);
+}
+
+.side-item:first-of-type {
+  background-color: rgb(22, 22, 22);
+  color: #007f7f;
+}
+
+.tool-bar {
+  width: calc(80% - 100px);
+  margin-inline: 50px;
+  background-color: rgb(30, 30, 30);
+  margin-bottom: 10px;
+  border-radius: 10px;
+  padding-block: 5px;
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  padding-inline: 10px;
+}
+
+.bar-btn {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background-color 0.15s ease;
+}
+
+.bar-btn:hover {
+  background-color: rgb(22, 22, 22);
 }

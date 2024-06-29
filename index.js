@@ -19,6 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   close.addEventListener("click", function () {
     close.parentElement.parentElement.style.display = "none";
-    localStorage.setItem("macideasclose", "closed");
+    localStorage.setItem("macideasclosee", "closed");
   });
 });

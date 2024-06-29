@@ -232,7 +232,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const taskItem = event.target.closest("li");
       taskList.removeChild(taskItem);
       const taskText = taskItem.getAttribute("data-task");
-      const text = taskItem.innerText;
       removeTaskFromStorage(taskText);
     }
     if (event.target.classList.contains("fa-pen")) {

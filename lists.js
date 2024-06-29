@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const bar = document.getElementById("sidebar");
   const overflowMenu = document.getElementById("overflow-menu");
+
   document.addEventListener("click", function () {
     bar.classList.remove("movingbar");
   });
+
   document.addEventListener("click", (e) => {
     if (e.target.classList.contains("shoot")) {
       overflowMenu.classList.add("menu-slide");
@@ -11,152 +13,182 @@ document.addEventListener("DOMContentLoaded", function () {
       overflowMenu.classList.remove("menu-slide");
     }
   });
+
   document.addEventListener("mousemove", function (event) {
-    if (event.clientX <= 5 && bar.classList.contains("movingbar") !== true) {
+    if (event.clientX <= 5 && !bar.classList.contains("movingbar")) {
       bar.classList.add("movingbar");
     }
   });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const header = document.getElementById("header");
-  const pageTitle = document.getElementById("title");
-  if (localStorage.header !== undefined) {
-    header.innerHTML = localStorage.header;
+document.addEventListener("DOMContentLoaded", () => {
+  const listPanel = document.getElementById("list-panel");
+  const optionMenu = document.getElementById("opmenu");
+  const opEdit = document.getElementById("opedit");
+  const opDelete = document.getElementById("opdelete");
+  const addListBtn = document.getElementById("add");
+  let listNamesArray = [];
+  const storedListNames = localStorage.getItem("listname");
+
+  if (storedListNames) {
+    listNamesArray = storedListNames.split(",");
+    listNamesArray.forEach((listName, index) => {
+      appendListPanelItem(listName, index);
+    });
+  } else {
+    const defaultListName = "List #1";
+    appendListPanelItem(defaultListName, 0);
+    listNamesArray.push(defaultListName);
+    localStorage.setItem("listname", listNamesArray.join(","));
   }
-  header.addEventListener("dblclick", function () {
-    header.contentEditable = true;
-    header.focus();
-    header.style.borderBottom = "2px solid white";
+
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("options")) {
+      const option = e.target;
+      const parentElement = option.closest("li");
+      const parentName = parentElement.querySelector("#name");
+      const currentIndex = parentName.getAttribute("data-list-index");
+      optionMenu.style.top = e.clientY - 50 + "px";
+      optionMenu.style.visibility = "visible";
+      opEdit.onclick = () => editListName(parentName, currentIndex);
+      opDelete.onclick = () => deleteListItem(parentElement, currentIndex);
+    } else {
+      optionMenu.style.visibility = "hidden";
+    }
   });
-  header.addEventListener("blur", function () {
-    header.contentEditable = false;
-    header.style.borderBottom = "none";
-    const textContent = header.innerText;
-    const sanitizedContent = textContent.replace(/<br>/g, "");
-    localStorage.setItem("header", sanitizedContent);
+
+  addListBtn.addEventListener("click", () => {
+    const newListName = "New List";
+    const newIndex = listNamesArray.length;
+    appendListPanelItem(newListName, newIndex);
+    listNamesArray.push(newListName);
+    localStorage.setItem("listname", listNamesArray.join(","));
   });
-  if (localStorage.title !== undefined) {
-    let thing123 = localStorage.title;
-    let thing321 = localStorage.descriptions;
-    let main = document.getElementById("wrap");
-    let anotherarray = thing321.split(",");
-    let anarray = thing123.split(",");
-    let someindex = anarray.length - 1;
-    anarray.splice(someindex, 1);
-    anarray.forEach(function (title, index) {
-      let go = document.createElement("div");
-      let group = document.createElement("div");
-      let titlebruh = document.createElement("span");
-      let description = document.createElement("span");
-      let edit = document.createElement("button");
-      let remove = document.createElement("button");
+
+  function appendListPanelItem(itemName, index) {
+    const newListElement = document.createElement("li");
+    newListElement.innerHTML = `
+      <span class="name" id="name" data-list-index="${index}">${itemName}</span>
+      <img src="media/ellipsis-vertical-solid.svg" class="options" id="options" />
+    `;
+    newListElement.classList.add("side-item");
+    listPanel.appendChild(newListElement);
+  }
+
+  function editListName(element, index) {
+    element.setAttribute("contenteditable", true);
+    element.focus();
+    const setCaret = () => {
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(element);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    };
+    setTimeout(setCaret, 1);
+    element.onblur = () => {
+      element.setAttribute("contenteditable", false);
+      if (element.innerText.trim().length === 0) {
+        element.innerText = "Untitled List";
+      }
+      listNamesArray[index] = element.innerText;
+      localStorage.setItem("listname", listNamesArray.join(","));
+    };
+    element.onkeydown = (e) => {
+      if (e.key === "Enter") {
+        element.blur();
+      }
+    };
+  }
+
+  function deleteListItem(element, index) {
+    if (
+      confirm(
+        "Are you sure you want to delete this list? All the items will be permanently deleted."
+      )
+    ) {
+      element.remove();
+      listNamesArray.splice(index, 1);
+      localStorage.setItem("listname", listNamesArray.join(","));
+      localStorage.removeItem(`list${index}items`);
+    }
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const list = document.getElementById("list");
+  if (
+    e.target.classList.contains("side-item") ||
+    e.target.parentElement.classList.contains("side-item")
+  ) {
+    const itemIndex = e.target.classList.contains("side-item")
+      ? e.target.children[0].getAttribute("data-list-index")
+      : e.target.getAttribute("data-list-index");
+
+    const sideItems = document.querySelectorAll(".side-item");
+    sideItems.forEach((sideItem) => {
+      sideItem.classList.remove("selected-side-item");
+    });
+    const selectedSideItem = e.target.classList.contains("side-item")
+      ? e.target
+      : e.target.parentElement;
+    selectedSideItem.classList.add("selected-side-item");
+
+    fetchItems(itemIndex);
+  }
+
+  function fetchItems(index) {
+    const barContainer = document.querySelector(".bar-container");
+    barContainer.style.visibility = "visible";
+    const listForm = document.getElementById("list-form");
+    const listInput = document.getElementById("list-input");
+    list.innerHTML = "";
+
+    let itemsArray = [];
+    const storedItems = localStorage.getItem(`list${index}items`);
+    if (storedItems) {
+      itemsArray = storedItems.split("|~|");
+    }
+
+    itemsArray.forEach((item) => appendListItem(item));
+
+    listForm.onsubmit = (e) => {
+      e.preventDefault();
+      const itemText = listInput.value.trim();
+      if (itemText !== "") {
+        itemsArray.push(itemText);
+        localStorage.setItem(`list${index}items`, itemsArray.join("|~|"));
+        appendListItem(itemText);
+        listInput.value = "";
+      }
+    };
+
+    function appendListItem(itemText) {
+      const listItem = document.createElement("li");
+      const edit = document.createElement("span");
+      const remove = document.createElement("span");
+      listItem.innerText = itemText;
+      listItem.classList.add("list-item");
+      listItem.setAttribute("data-item", itemText);
+      remove.classList.add("remove");
+      remove.innerHTML =
+        '<i class="fa-solid fa-trash" style="color: #ffffff;"></i>';
       edit.classList.add("edit");
-      remove.classList.add("edit");
-      go.id = "item";
-      group.id = "group";
-      titlebruh.id = "item-t";
-      description.id = "item-d";
-      edit.id = "edit";
-      remove.id = "remove";
-      go.classList.add("item");
-      titlebruh.classList.add("title");
-      description.classList.add("des");
-      titlebruh.innerHTML = title;
-      description.innerHTML = anotherarray[index];
-      edit.innerHTML = "Edit";
-      remove.innerHTML = "Delete";
-      main.insertBefore(go, main.firstChild);
-      go.appendChild(titlebruh);
-      go.appendChild(description);
-      go.appendChild(group);
-      group.appendChild(edit);
-      group.appendChild(remove);
-    });
-  }
-  const thing = document.getElementById("item");
-  const button = document.getElementById("edit");
-  const create = document.getElementById("add");
-  const wrap = document.getElementById("wrap");
-  create.addEventListener("click", go);
-  document.addEventListener("click", function (event) {
-    let go = event.target.parentElement.parentElement;
-    let title = go.querySelector("#item-t");
-    let description = go.querySelector("#item-d");
-    let editButton = go.querySelector("#edit");
-    if (event.target === editButton) {
-      title.contentEditable = "true";
-      description.contentEditable = "true";
-      description.focus();
-      title.classList.add("editing");
-      description.classList.add("editing");
-    } else if (event.target === wrap) {
-      save();
-      title.classList.remove("editing");
-      description.classList.remove("editing");
-      title.contentEditable = "false";
-      description.contentEditable = "false";
+      edit.innerHTML =
+        '<i class="fa-solid fa-pen" style="color: #ffffff;"></i>';
+      listItem.appendChild(remove);
+      listItem.appendChild(edit);
+      list.appendChild(listItem);
     }
-    let main = document.getElementById("wrap");
-    let removeButton = go.querySelector("#remove");
-    if (event.target === removeButton) {
-      main.removeChild(event.target.parentElement.parentElement);
-      save();
-    }
-  });
-  function save() {
-    const test = document.querySelectorAll(".title");
-    let all = "";
-    test.forEach(function (title) {
-      all += title.innerHTML + ",";
-    });
-    localStorage.setItem("title", all);
-    const desc = document.querySelectorAll(".des");
-    let whole = "";
-    desc.forEach(function (asdf) {
-      whole += asdf.innerHTML + ",";
-    });
-    localStorage.setItem("descriptions", whole);
-  }
-  function go() {
-    let main = document.getElementById("wrap");
-    let go = document.createElement("div");
-    let group = document.createElement("div");
-    let title = document.createElement("span");
-    let description = document.createElement("span");
-    let edit = document.createElement("button");
-    let remove = document.createElement("button");
-    edit.classList.add("edit");
-    remove.classList.add("edit");
-    go.id = "item";
-    group.id = "group";
-    title.id = "item-t";
-    description.id = "item-d";
-    edit.id = "edit";
-    remove.id = "remove";
-    go.classList.add("item");
-    title.classList.add("title");
-    description.classList.add("des");
-    title.innerHTML = "Insert Title Here";
-    description.innerHTML = "Insert Description for the List Item Here";
-    edit.innerHTML = "Edit";
-    remove.innerHTML = "Delete";
-    main.insertBefore(go, main.firstChild);
-    go.appendChild(title);
-    go.appendChild(description);
-    go.appendChild(group);
-    group.appendChild(edit);
-    group.appendChild(remove);
-    title.contentEditable = "true";
-    description.contentEditable = "true";
-    title.focus();
-    title.classList.add("editing");
-    description.classList.add("editing");
-    title.addEventListener("blur", function () {
-      title.classList.remove("editing");
-      description.classList.remove("editing");
-      title.contentEditable = "false";
-      description.contentEditable = "false";
+
+    list.addEventListener("click", (e) => {
+      if (e.target.classList.contains("fa-trash")) {
+        const listItem = e.target.closest("li");
+        const itemText = listItem.getAttribute("data-item");
+        listItem.remove();
+        itemsArray = itemsArray.filter((item) => item !== itemText);
+        localStorage.setItem(`list${index}items`, itemsArray.join("|~|"));
+      }
     });
   }
 });

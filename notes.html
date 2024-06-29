@@ -65,34 +65,50 @@
     <div class="wrap">
       <div class="sidebar">
         <div class="functions">
-          <select class="folders">
+          <select class="folders" id="name">
             <option value="">Folder 1</option>
-            <option value="">Folder 2</option>
           </select>
-          <img src="media/plus-solid.svg" id="add" class="add" />
+          <div class="folderbuttons">
+            <img src="media/plus-solid.svg" id="add" class="add" />
+            <img
+              src="media/ellipsis-vertical-solid.svg"
+              id="folderop"
+              class="add"
+            />
+          </div>
         </div>
-        <li class="side-item">skibidi</li>
-        <li class="side-item">skibidi</li>
-        <li class="side-item">skibidi</li>
-        <li class="side-item">skibidi</li>
-        <li class="side-item">skibidi</li>
+        <li class="side-item">
+          <span class="name" id="name">Note #1</span>
+          <img
+            src="media/ellipsis-vertical-solid.svg"
+            class="options"
+            id="options"
+          />
+        </li>
+        <div class="option-menu" id="opmenu">
+          <li id="opedit">
+            <img src="media/pen-solid.svg" class="o-menu-e" />
+            Rename
+          </li>
+          <li id="opdelete">
+            <img src="media/trash-solid.svg" class="o-menu-e" />
+            Delete
+          </li>
+        </div>
       </div>
       <div class="main">
-        <div class="note">
-          <div class="title">Title1</div>
-          <div class="preview">preview text</div>
-        </div>
-        <div class="note">
-          <div class="title">Title2</div>
-          <div class="preview">preview text</div>
-        </div>
-        <div class="note">
-          <div class="title">Title3</div>
-          <div class="preview">preview text</div>
-        </div>
-        <div class="note">
-          <div class="title">Title4</div>
-          <div class="preview">preview text</div>
+        <div class="note-container">
+          <textarea
+            contenteditable="true"
+            class="textarea"
+            placeholder="Start typing to jot down notes..."
+          ></textarea>
+          <div class="tool-bar">
+            <button class="bar-btn" id="bigger">+</button>
+            <input type="text" id="fontsize" class="fontsize" value="18" />
+            <button class="bar-btn" id="smaller">-</button>
+            <div class="status" id="status">Note saved</div>
+          </div>
         </div>
       </div>
     </div>
