@@ -10,6 +10,7 @@
     <title id="title">Drawings | MacIdeas</title>
     <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="drawings.css" />
     <script src="index.js"></script>
   </head>
   <body>
@@ -18,7 +19,6 @@
       <a href="notes.html" class="olink">Notes</a>
       <a href="drawings.html" class="olink">Drawings</a>
       <a href="lists.html" class="olink">Lists</a>
-      <a href="boards.html" class="olink">Boards</a>
     </div>
     <nav class="nav">
       <div class="overflowm shoot" id="overflowm">
@@ -31,7 +31,6 @@
       <a href="notes.html" class="link">Notes</a>
       <a href="drawings.html" class="link">Drawings</a>
       <a href="lists.html" class="link">Lists</a>
-      <a href="boards.html" class="link">Boards</a>
       <div class="select secondselect">
         <span id="header123">Tabs</span>
         <ul id="cats">
@@ -39,7 +38,6 @@
           <a href="notes.html">Notes</a>
           <a href="drawings.html">Drawings</a>
           <a href="lists.html">Lists</a>
-          <a href="boards.html">Boards</a>
         </ul>
       </div>
       <div class="select">
@@ -54,7 +52,7 @@
         </ul>
       </div>
     </nav>
-    <div class="macsidebar" id="sidebar">
+    <div class="macsidebar" id="sidebare">
       <a href="/"><img src="/logo.png" alt="" /></a>
       <a href="/macideas/"><img src="/MacIdeas Logo.png" alt="" /></a>
       <a href="/maclearn/"><img src="/MacLearn Logo.png" alt="" /></a>
@@ -63,9 +61,57 @@
       <a href="/macblog/"><img src="/MacBlog Logo.png" alt="" /></a>
     </div>
     <div class="wrap">
-      <h1 style="text-shadow: 0px 0px 15px gray; color: white">
-        MacIdeas Drawings coming soon!
-      </h1>
+      <div class="sidebar">
+        <div class="functions">
+          <select class="folders" id="name">
+            <option value="">Folder 1</option>
+          </select>
+          <div class="folderbuttons">
+            <img src="media/plus-solid.svg" id="add" class="add" />
+            <img
+              src="media/ellipsis-vertical-solid.svg"
+              id="folderop"
+              class="add"
+            />
+          </div>
+        </div>
+        <li class="side-item selected-side-item">
+          <span class="name" id="name">Drawing #1</span>
+          <img
+            src="media/ellipsis-vertical-solid.svg"
+            class="options"
+            id="options"
+          />
+        </li>
+        <div class="option-menu" id="opmenu">
+          <li id="opedit">
+            <img src="media/pen-solid.svg" class="o-menu-e" />
+            Rename
+          </li>
+          <li id="opdelete">
+            <img src="media/trash-solid.svg" class="o-menu-e" />
+            Delete
+          </li>
+        </div>
+      </div>
+      <div class="main">
+        <canvas id="canvas"></canvas>
+        <div class="tool-bar">
+          <button class="bar-btn" id="bigger">+</button>
+          <input type="text" id="width" class="width" value="5" />
+          <button class="bar-btn" id="smaller">-</button>
+          <label for="color" class="color-label" id="color-label">
+            <input
+              type="color"
+              name="color"
+              id="color"
+              value="#ff0000"
+              class="color"
+          /></label>
+          <button id="clear" class="clear">Clear</button>
+        </div>
+      </div>
     </div>
+    <script src="drawings.js"></script>
   </body>
 </html>

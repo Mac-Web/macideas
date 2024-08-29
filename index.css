@@ -84,7 +84,7 @@ body {
 
 .wrap {
   width: 100%;
-  height: calc(100vh - 55px);
+  height: calc(100vh - 46.6667px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -293,4 +293,39 @@ body {
   .overflowm {
     display: flex;
   }
+}
+
+.tab-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.tab-link {
+  color: white;
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  font-size: 20px;
+  padding-inline: 25px;
+  padding-block: 20px;
+  text-align: center;
+  width: 200px;
+  font-weight: bold;
+  background-color: rgb(30, 30, 30);
+}
+
+.welcome-hero {
+  color: white;
+  font-size: 35px;
+  padding-bottom: 15px;
+}
+
+.des-hero {
+  color: white;
+  font-size: 20px;
+  padding-bottom: 40px;
 }

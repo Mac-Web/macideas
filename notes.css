@@ -334,13 +334,9 @@ body {
   outline: none;
   border-radius: 5px;
   text-align: center;
-  width: 40px;
+  width: 25px;
   color: white;
   transition: background-color 0.15s ease;
-}
-
-.fontsize:hover {
-  background-color: rgb(22, 22, 22);
 }
 
 .textarea {
