@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let ogsize = ogstring.getPropertyValue("font-size");
   const size = document.getElementById("fontsize");
   if (localStorage.getItem("note")) {
-    textarea.value = localStorage.getItem("note");
+    textarea.innerHTML = localStorage.getItem("note");
   }
   if (localStorage.getItem("notesize")) {
     textarea.style.fontSize = localStorage.getItem("notesize");
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function saveNote() {
-    const value = noteContainer.querySelector(".textarea").value;
+    const value = noteContainer.querySelector(".textarea").innerHTML;
     let ogstring = window.getComputedStyle(textarea);
     let ogsize = ogstring.getPropertyValue("font-size");
     localStorage.setItem("note", value);
@@ -148,3 +148,19 @@ document.addEventListener("DOMContentLoaded", function () {
     textarea.style.fontSize = size.value + "px";
   });
 });
+
+function toggleBold() {
+  document.execCommand("bold");
+}
+
+function toggleItalic() {
+  document.execCommand("italic");
+}
+
+function toggleUnderline() {
+  document.execCommand("underline");
+}
+
+function toggleStrike() {
+  document.execCommand("strikethrough");
+}

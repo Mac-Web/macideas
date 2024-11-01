@@ -95,15 +95,57 @@
       </div>
       <div class="main">
         <div class="note-container">
-          <textarea
+          <div
             contenteditable="true"
             class="textarea"
             placeholder="Start typing to jot down notes..."
-          ></textarea>
+          ></div>
           <div class="tool-bar">
-            <button class="bar-btn" id="bigger">+</button>
-            <input type="text" id="fontsize" class="fontsize" value="18" />
-            <button class="bar-btn" id="smaller">-</button>
+            <button title="Increase text size" class="bar-btn" id="bigger">
+              +
+            </button>
+            <input
+              title="Change text size"
+              type="text"
+              id="fontsize"
+              class="fontsize"
+              value="18"
+            />
+            <button title="Decrease text size" class="bar-btn" id="smaller">
+              -
+            </button>
+            <button
+              title="Bold selected text"
+              class="bar-btn"
+              id="bold"
+              onclick="toggleBold()"
+            >
+              B
+            </button>
+            <button
+              title="Italicize selected text"
+              class="bar-btn"
+              id="italic"
+              onclick="toggleItalic()"
+            >
+              <i>I</i>
+            </button>
+            <button
+              title="Underline selected text"
+              class="bar-btn"
+              id="underline"
+              onclick="toggleUnderline()"
+            >
+              <u>U</u>
+            </button>
+            <button
+              title="Strikethrough selected text"
+              class="bar-btn"
+              id="strike"
+              onclick="toggleStrike()"
+            >
+              <strike>S</strike>
+            </button>
             <div class="status" id="status">Note saved</div>
           </div>
         </div>

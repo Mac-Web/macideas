@@ -71,17 +71,14 @@
           </select>
           <div class="folderbuttons">
             <img src="media/plus-solid.svg" id="add" class="add" />
-            <img src="media/ellipsis-vertical-solid.svg" id="folderop" class="add" />
+            <img
+              src="media/ellipsis-vertical-solid.svg"
+              id="folderop"
+              class="add"
+            />
           </div>
         </div>
-        <li class="side-item">
-          <span class="name" id="name">Task List 1</span>
-          <img
-            src="media/ellipsis-vertical-solid.svg"
-            class="options"
-            id="options"
-          />
-        </li>
+        <div id="task-panel"></div>
         <div class="option-menu" id="opmenu">
           <li id="opedit">
             <img src="media/pen-solid.svg" class="o-menu-e" />
@@ -94,18 +91,24 @@
         </div>
       </div>
       <div class="main">
-        <div id="tasks">
-          <ul id="task-list"></ul>
-          <form id="tasks-input">
-            <div class="input">
-              <input
-                id="task-input"
-                placeholder="Add tasks here"
-                autocomplete="off"
-                maxlength="250"
-              />
-              <button id="add-task-btn" type="submit">↪</button>
-            </div>
+        <ul id="list">
+          <img src="media/listshome.png" class="listimg" />
+          <h2 class="welcome">Welcome to MacIdeas Tasks!</h2>
+          <p class="directions">
+            Click on a task on the side panel on the right to start viewing,
+            managing, and completing your tasks!
+          </p>
+        </ul>
+        <div class="bar-container">
+          <form id="list-form" class="input">
+            <input
+              id="list-input"
+              placeholder="Add tasks here"
+              autocomplete="off"
+              maxlength="250"
+              class="bar"
+            />
+            <button type="submit" class="submit-btn">↪</button>
           </form>
         </div>
         <audio id="ding">
