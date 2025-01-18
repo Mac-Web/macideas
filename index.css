@@ -1,3 +1,4 @@
+/*
 * {
   margin: 0;
   padding: 0;
@@ -195,7 +196,7 @@ body {
 }
 
 /*----------------above is all the universal macweb template css------------------------*/
-
+/*
 .overflowm {
   display: none;
   width: 40px;
@@ -329,3 +330,305 @@ body {
   font-size: 20px;
   padding-bottom: 40px;
 }
+*/
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: rgb(25, 25, 25);
+}
+
+.movingbar {
+  transform: translateX(0px) !important;
+}
+
+.macsidebar {
+  position: fixed;
+  top: 9vh;
+  left: 3px;
+  transform: translateX(-120%);
+  transition: transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(10, 10, 10, 0.9);
+  padding-inline: 8px;
+  height: 90vh;
+  z-index: 10000000;
+  border-radius: 5px;
+  padding-block: 10px;
+  overflow: auto;
+}
+
+.macsidebar img {
+  width: 38px;
+  margin-top: 2px;
+}
+
+.macsidebar a {
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.macsidebar a:hover {
+  transform: scale(1.15);
+}
+
+.nav {
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-inline: 100px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(25, 25, 25, 0.9);
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-link {
+  padding-block: 10px;
+  padding-inline: 15px;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0;
+  margin-block: 5px;
+  position: relative;
+  color: white;
+  transition: background-color 0.15s;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  margin-right: 30px;
+  height: 32px;
+}
+
+.logo img {
+  height: 32px;
+}
+
+.right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.profile {
+  box-sizing: content-box;
+  height: 32px;
+  width: 32px;
+  padding: 5px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.select {
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  appearance: none;
+  padding-block: 10px;
+  padding-inline: 20px;
+  border-radius: 5px;
+  text-align: center;
+  margin-block: 5px;
+  z-index: 100000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 20px;
+  transition: background-color 0.15s ease;
+}
+
+.select:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.caret {
+  width: 10px;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+#cats {
+  flex-direction: column;
+  border-radius: 0px 0px 5px 5px;
+  background-color: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 33px;
+  width: 100%;
+  transform-origin: top;
+  left: 0;
+  display: flex;
+  transition: transform 0.15s ease !important;
+  padding-bottom: 5px;
+  transform: scaleY(0);
+}
+
+#cats a {
+  color: rgb(130, 130, 130);
+  text-decoration: none;
+  padding-block: 10px;
+  font-size: 17px;
+  transition: color 0.15s ease;
+  font-weight: normal;
+}
+
+#cats a:hover {
+  color: white;
+}
+
+.wrap {
+  width: 100%;
+  padding-inline: 100px;
+}
+
+.hero {
+  text-align: center;
+  padding-block: 50px;
+  color: white;
+}
+
+.hero-title {
+  font-size: 40px;
+  padding-bottom: 20px;
+}
+
+.hero-des {
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.apps {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.app {
+  width: 190px;
+  background-color: rgb(15, 15, 15);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-block: 20px;
+  gap: 20px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+.modal-background {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 99999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background-color: rgb(15, 15, 15);
+  width: 400px;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0px 0px 50px rgb(60, 60, 60);
+  position: relative;
+}
+
+.modal-title {
+  font-size: 25px;
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+}
+
+.modal-des {
+  color: rgb(180, 180, 180);
+  line-height: 25px;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.modal-img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.modal-link {
+  background-color: #007f7f;
+  color: white;
+  text-decoration: none;
+  width: 40%;
+  margin-inline: 30%;
+  display: block;
+  text-align: center;
+  padding-block: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: 30px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-link:hover {
+  background-color: #006868;
+}
+
+.modal-link:active {
+  background-color: #004f4f;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.modal-close:hover {
+  transform: scale(1.4);
+}
+
+.modal-close:active {
+  transform: scale(0.9);
+}
+

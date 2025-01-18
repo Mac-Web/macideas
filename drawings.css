@@ -20,7 +20,7 @@
 }
 .wrap {
   width: 100%;
-  height: calc(100vh - 46.667px);
+  height: calc(100vh - 55px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,13 +35,12 @@
 
 .sidebar {
   width: 20%;
-  background-color: rgb(30, 30, 30);
   height: 100%;
   z-index: 1000;
 }
 
 .folders {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   border-radius: 8px;
   border: none;
   appearance: none;
@@ -57,7 +56,7 @@
 .add {
   height: 40.6667px !important;
   width: 40.6667px;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   cursor: pointer;
   border-radius: 8px;
   padding-block: 10px;
@@ -115,7 +114,7 @@
 }
 
 .folders {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   border-radius: 8px;
   border: none;
   appearance: none;
@@ -137,7 +136,7 @@ li {
 }
 .option-menu {
   visibility: hidden;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   width: 150px;
   border-radius: 8px;
   padding: 5px;
@@ -164,7 +163,7 @@ li {
 }
 
 .folderbuttons {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -174,7 +173,7 @@ li {
 .add {
   height: 40.6667px !important;
   width: 40.6667px;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   cursor: pointer;
   border-radius: 8px 0px 0px 8px;
   padding-block: 10px;
@@ -218,7 +217,7 @@ canvas {
 }
 
 .side-item:hover {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
 }
 
 .welcome {
@@ -242,7 +241,7 @@ canvas {
 }
 
 .selected-side-item {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   color: #007f7f;
 }
 
@@ -429,7 +428,7 @@ li {
 }
 
 .bar-btn:hover {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
 }
 .width {
   background-color: transparent;
@@ -441,3 +440,170 @@ li {
   color: white;
   transition: background-color 0.15s ease;
 }
+
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: rgb(25, 25, 25);
+}
+
+.movingbar {
+  transform: translateX(0px) !important;
+}
+
+.macsidebar {
+  position: fixed;
+  top: 9vh;
+  left: 3px;
+  transform: translateX(-120%);
+  transition: transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(10, 10, 10, 0.9);
+  padding-inline: 8px;
+  height: 90vh;
+  z-index: 10000000;
+  border-radius: 5px;
+  padding-block: 10px;
+  overflow: auto;
+}
+
+.macsidebar img {
+  width: 38px;
+  margin-top: 2px;
+}
+
+.macsidebar a {
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.macsidebar a:hover {
+  transform: scale(1.15);
+}
+
+.nav {
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-inline: 100px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(25, 25, 25, 0.9);
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-link {
+  padding-block: 10px;
+  padding-inline: 15px;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0;
+  margin-block: 5px;
+  position: relative;
+  color: white;
+  transition: background-color 0.15s;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  margin-right: 30px;
+  height: 32px;
+}
+
+.logo img {
+  height: 32px;
+}
+
+.right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.profile {
+  box-sizing: content-box;
+  height: 32px;
+  width: 32px;
+  padding: 5px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.select {
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  appearance: none;
+  padding-block: 10px;
+  padding-inline: 20px;
+  border-radius: 5px;
+  text-align: center;
+  margin-block: 5px;
+  z-index: 100000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 20px;
+  transition: background-color 0.15s ease;
+}
+
+.select:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.caret {
+  width: 10px;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+#cats {
+  flex-direction: column;
+  border-radius: 0px 0px 5px 5px;
+  background-color: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 33px;
+  width: 100%;
+  transform-origin: top;
+  left: 0;
+  display: flex;
+  transition: transform 0.15s ease !important;
+  padding-bottom: 5px;
+  transform: scaleY(0);
+}
+
+#cats a {
+  color: rgb(130, 130, 130);
+  text-decoration: none;
+  padding-block: 10px;
+  font-size: 17px;
+  transition: color 0.15s ease;
+  font-weight: normal;
+}
+
+#cats a:hover {
+  color: white;
+}
+

@@ -2,19 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="google-site-verification"
-      content="UWHTkMxkkqv0hsUJcBHWc3ZjLXysHyydwRcO67gs_tk"
-    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title id="title">Lists | MacIdeas</title>
+    <title>Calendar | MacIdeas</title>
+    <link rel="stylesheet" href="calendar.css" />
     <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="lists.css" />
-    <script
-      src="https://kit.fontawesome.com/196781a711.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="lists.js"></script>
   </head>
   <body>
     <div class="macsidebar" id="sidebar">
@@ -51,54 +42,39 @@
       </div>
     </nav>
     <div class="wrap">
-      <div class="sidebar">
-        <div class="functions">
-          <select class="folders" id="name">
-            <option value="">Folder 1</option>
-          </select>
-          <div class="folderbuttons">
-            <img src="media/plus-solid.svg" id="add" class="add" />
-            <img
-              src="media/ellipsis-vertical-solid.svg"
-              id="folderop"
-              class="add"
-            />
+      <div id="container">
+        <div id="header">
+          <div id="monthDisplay"></div>
+          <div>
+            <button id="backButton">Back</button>
+            <button id="nextButton">Next</button>
           </div>
         </div>
-        <div id="list-panel"></div>
-        <div class="option-menu" id="opmenu">
-          <li id="opedit">
-            <img src="media/pen-solid.svg" class="o-menu-e" />
-            Rename
-          </li>
-          <li id="opdelete">
-            <img src="media/trash-solid.svg" class="o-menu-e" />
-            Delete
-          </li>
+        <div id="weekdays">
+          <div>Sunday</div>
+          <div>Monday</div>
+          <div>Tuesday</div>
+          <div>Wednesday</div>
+          <div>Thursday</div>
+          <div>Friday</div>
+          <div>Saturday</div>
         </div>
+        <div id="calendar"></div>
       </div>
-      <div class="main">
-        <ul id="list">
-          <img src="media/listshome.png" class="listimg" />
-          <h2 class="welcome">Welcome to MacIdeas Lists!</h2>
-          <p class="directions">
-            Click on a list on the side panel on the right to start viewing,
-            managing, and completing your lists!
-          </p>
-        </ul>
-        <div class="bar-container">
-          <form id="list-form" class="input">
-            <input
-              id="list-input"
-              placeholder="Add list items here"
-              autocomplete="off"
-              maxlength="250"
-              class="bar"
-            />
-            <button type="submit" class="submit-btn">↪</button>
-          </form>
-        </div>
+      <div id="newEventModal">
+        <h2>New Event</h2>
+        <input id="eventTitleInput" placeholder="Event Title" />
+        <button id="saveButton">Save</button>
+        <button id="cancelButton">Cancel</button>
       </div>
+      <div id="deleteEventModal">
+        <h2>Event</h2>
+        <p id="eventText"></p>
+        <button id="deleteButton">Delete</button>
+        <button id="closeButton">Cancel</button>
+      </div>
+      <div id="modalBackDrop"></div>
     </div>
+    <script src="calendar.js"></script>
   </body>
 </html>

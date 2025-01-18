@@ -1,197 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-  background-color: rgb(40, 40, 40);
-}
-
-.select {
-  background-color: black;
-  border: none;
-  outline: none;
-  color: white;
-  font-size: 18px;
-  border-bottom: 2px solid black;
-  font-weight: bold;
-  appearance: none;
-  padding-block: 12px;
-  padding-inline: 20px;
-  border-radius: 20px;
-  text-align: center;
-  cursor: pointer;
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-#cats {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 35px;
-  width: 140px;
-  border-radius: 0px 0px 10px 10px;
-  background-color: black;
-  padding-bottom: 10px;
-  z-index: 10000 !important;
-  transition: display 0.3s ease;
-}
-
-.select:hover #cats {
-  display: flex;
-  z-index: 10000;
-  box-shadow: 0px 10px 15px rgb(60, 60, 60);
-}
-
-#cats a {
-  color: var(--text-color);
-  text-decoration: none;
-  padding-block: 10px;
-  font-size: 18px;
-  z-index: 10000;
-  position: relative;
-}
-
-#cats a::after {
-  content: "";
-  height: 2px;
-  position: absolute;
-  z-index: 10000;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0px;
-  margin: 0;
-  background-color: #007f7f;
-  transition: width 0.15s ease;
-}
-
-#cats a:hover::after {
-  width: 50%;
-  background-color: #007f7f;
-  transition: width 0.2s ease;
-}
-
-.movingbar {
-  transform: translateX(0px) !important;
-}
-
 .wrap {
   width: 100%;
-  height: calc(100vh - 46.667px);
+  height: calc(100vh - 55px);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-}
-
-.macsidebar {
-  position: absolute;
-  top: 9vh;
-  left: 3px;
-  transform: translateX(-120%);
-  transition: transform 0.15s ease;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.85);
-  padding-inline: 8px;
-  height: 90vh;
-  z-index: 10000000;
-  border-radius: 15px;
-  padding-block: 10px;
-  overflow: auto;
-}
-
-.macsidebar img {
-  width: 38px;
-  margin-top: 2px;
-}
-
-.macsidebar a {
-  display: block;
-  transition: transform 0.2s ease;
-}
-
-.macsidebar a:hover {
-  transform: scale(1.2);
-}
-
-.nav {
-  background-color: black;
-  color: white;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: flex-start;
-  position: sticky;
-  top: 0;
-}
-
-.link,
-.olink {
-  padding-block: 12px;
-  padding-inline: 20px;
-  font-size: 18px;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 0;
-  position: relative;
-  color: white;
-  border-bottom: 2px solid black;
-  transition: border-bottom 0.3s;
-}
-
-.link::after,
-.olink::before {
-  content: "";
-  height: 2px;
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0px;
-  margin: 0;
-  background-color: #007f7f;
-  transition: width 0.15s ease;
-}
-
-.link:hover::after {
-  width: 80%;
-  background-color: #007f7f;
-  transition: width 0.2s ease;
-}
-
-.olink {
-  transition: color 0.15s ease;
-  border-color: rgb(30, 30, 30);
-}
-
-.olink::before {
-  height: 0px;
-  transform: translateY(-50%);
-  width: 3px;
-  left: 0;
-  top: 50%;
-  transition: height 0.2s ease;
-}
-
-.olink:hover::before {
-  height: 80%;
-}
-
-.logo {
-  margin-inline: 35px;
-  height: 32px;
-}
-
-.logo img {
-  height: 32px;
 }
 
 .ul {
@@ -456,7 +269,6 @@ ul {
 }
 .sidebar {
   width: 20%;
-  background-color: rgb(30, 30, 30);
   height: 100%;
   z-index: 100;
 }
@@ -478,7 +290,7 @@ ul {
 }
 
 .side-item:hover {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
 }
 
 .options {
@@ -497,7 +309,7 @@ ul {
 
 .option-menu {
   visibility: hidden;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   width: 150px;
   border-radius: 8px;
   padding: 5px;
@@ -530,7 +342,7 @@ ul {
 }
 
 .folderbuttons {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -557,7 +369,7 @@ ul {
 }
 
 .folders {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   border-radius: 8px;
   border: none;
   appearance: none;
@@ -573,7 +385,7 @@ ul {
 .add {
   height: 40.6667px !important;
   width: 40.6667px;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   cursor: pointer;
   border-radius: 8px 0px 0px 8px;
   padding-block: 10px;
@@ -664,7 +476,7 @@ li {
 }
 
 .selected-side-item {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   color: #007f7f;
 }
 
@@ -689,7 +501,7 @@ li {
 }
 
 .selected-side-item {
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(15, 15, 15);
   color: #007f7f;
 }
 
@@ -699,7 +511,6 @@ li {
 }
 
 .bar-container {
-  background-color: rgb(40, 40, 40);
   height: 70px;
   width: 100%;
   visibility: hidden;
@@ -709,7 +520,7 @@ li {
 }
 
 .input {
-  border-radius: 10px;
+  border-radius: 5px;
   padding-inline: 30px;
   width: 60%;
   display: flex;
@@ -772,8 +583,8 @@ li {
 .list-item {
   width: 100%;
   color: white;
-  background-color: rgb(30, 30, 30);
-  border-radius: 10px;
+  background-color: rgb(15, 15, 15);
+  border-radius: 5px;
   padding-block: 15px;
   margin-top: 5px;
   font-size: 18px;
@@ -782,10 +593,175 @@ li {
 }
 
 #list {
-  width: 60%;
+  width: 70%;
   position: absolute;
-  right: 10%;
   overflow: auto;
   height: 75%;
+  padding-bottom: 20px;
   margin-top: 20px;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: rgb(25, 25, 25);
+}
+
+.movingbar {
+  transform: translateX(0px) !important;
+}
+
+.macsidebar {
+  position: fixed;
+  top: 9vh;
+  left: 3px;
+  transform: translateX(-120%);
+  transition: transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(10, 10, 10, 0.9);
+  padding-inline: 8px;
+  height: 90vh;
+  z-index: 10000000;
+  border-radius: 5px;
+  padding-block: 10px;
+  overflow: auto;
+}
+
+.macsidebar img {
+  width: 38px;
+  margin-top: 2px;
+}
+
+.macsidebar a {
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.macsidebar a:hover {
+  transform: scale(1.15);
+}
+
+.nav {
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding-inline: 100px;
+  position: sticky;
+  top: 0;
+  background-color: rgba(25, 25, 25, 0.9);
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-link {
+  padding-block: 10px;
+  padding-inline: 15px;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0;
+  margin-block: 5px;
+  position: relative;
+  color: white;
+  transition: background-color 0.15s;
+  border-radius: 5px;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.logo {
+  margin-right: 30px;
+  height: 32px;
+}
+
+.logo img {
+  height: 32px;
+}
+
+.right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+}
+
+.profile {
+  box-sizing: content-box;
+  height: 32px;
+  width: 32px;
+  padding: 5px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.select {
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  appearance: none;
+  padding-block: 10px;
+  padding-inline: 20px;
+  border-radius: 5px;
+  text-align: center;
+  margin-block: 5px;
+  z-index: 100000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  gap: 20px;
+  transition: background-color 0.15s ease;
+}
+
+.select:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.caret {
+  width: 10px;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+#cats {
+  flex-direction: column;
+  border-radius: 0px 0px 5px 5px;
+  background-color: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 33px;
+  width: 100%;
+  transform-origin: top;
+  left: 0;
+  display: flex;
+  transition: transform 0.15s ease !important;
+  padding-bottom: 5px;
+  transform: scaleY(0);
+}
+
+#cats a {
+  color: rgb(130, 130, 130);
+  text-decoration: none;
+  padding-block: 10px;
+  font-size: 17px;
+  transition: color 0.15s ease;
+  font-weight: normal;
+}
+
+#cats a:hover {
+  color: white;
 }

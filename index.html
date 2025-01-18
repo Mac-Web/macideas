@@ -13,78 +13,86 @@
     <script src="index.js"></script>
   </head>
   <body>
-    <div class="overflow-menu shoot" id="overflow-menu">
-      <a href="tasks.html" class="olink">Tasks</a>
-      <a href="notes.html" class="olink">Notes</a>
-      <a href="drawings.html" class="olink">Drawings</a>
-      <a href="lists.html" class="olink">Lists</a>
-    </div>
-    <nav class="nav">
-      <div class="overflowm shoot" id="overflowm">
-        <img src="bars-solid.svg" alt="Menu" class="shoot" />
-      </div>
-      <a href="/macideas/" class="logo">
-        <img src="macideas-logo.png" alt="MacIdeas Logo" />
-      </a>
-      <a href="tasks.html" class="link">Tasks</a>
-      <a href="notes.html" class="link">Notes</a>
-      <a href="drawings.html" class="link">Drawings</a>
-      <a href="lists.html" class="link">Lists</a>
-      <div class="select secondselect">
-        <span id="header123">Tabs</span>
-        <ul id="cats">
-          <a href="tasks.html">Tasks</a>
-          <a href="notes.html">Notes</a>
-          <a href="drawings.html">Drawings</a>
-          <a href="lists.html">Lists</a>
-        </ul>
-      </div>
-      <div class="select">
-        <span id="header123">Help</span>
-        <ul id="cats">
-          <a href="/macblog/projects/macideas/">About</a>
-          <a href="/macblog/updates/macideas/">Updates</a>
-          <a href="/macblog/projects/macideas/">Docs</a>
-          <a href="https://forms.gle/fpMRFAcJU28VLpwt9" target="_blank"
-            >Feedback</a
-          >
-        </ul>
-      </div>
-    </nav>
     <div class="macsidebar" id="sidebar">
       <a href="/"><img src="/logo.png" alt="" /></a>
       <a href="/macideas/"><img src="/MacIdeas Logo.png" alt="" /></a>
       <a href="/maclearn/"><img src="/MacLearn Logo.png" alt="" /></a>
-      <a href="/mactime/"><img src="/MacTime Logo.png" alt="" /></a>
+      <a href="/mactools/"><img src="/MacTools Logo.png" alt="" /></a>
       <a href="/macvg/"><img src="/MacVG Logo.png" alt="" /></a>
       <a href="/macblog/"><img src="/MacBlog Logo.png" alt="" /></a>
     </div>
-    <div class="announce">
-      <h2>
-    The
-        <a href="/macblog/updates/macideas/2024/november.html" target="_blank"
-          >MacIdeas v.1.3 November Update</a
+    <nav class="nav">
+      <a href="/macideas/" class="logo">
+        <img src="macideas-logo.png" alt="MacIdeas Logo" />
+      </a>
+      <a href="tasks.html" class="nav-link">Tasks</a>
+      <a href="notes.html" class="nav-link">Notes</a>
+      <a href="drawings.html" class="nav-link">Drawings</a>
+      <a href="lists.html" class="nav-link">Lists</a>
+      <a href="calendar.html" class="nav-link">Calendar</a>
+      <div class="right">
+        <div class="select help-menu" id="help-menu">
+          <span id="header123" class="help-menu">Help</span>
+          <img src="/caret.svg" class="caret help-menu" id="caret" />
+          <ul id="cats" class="help-menu">
+            <a href="/macblog/projects/macideas/">About</a>
+            <a href="/macblog/updates/macideas/">Updates</a>
+            <a href="/macblog/projects/macideas/">Docs</a>
+            <a href="https://forms.gle/fpMRFAcJU28VLpwt9" target="_blank">
+              Feedback
+            </a>
+          </ul>
+        </div>
+        <img src="/profile.svg" class="profile" id="profile" />
+      </div>
+    </nav>
+    <div class="modal-background">
+      <div class="modal">
+        <h2 class="modal-title">MacIdeas Winter Update</h2>
+        <img src="media/update.jpg" class="modal-img" />
+        <p class="modal-des">
+          With a huge redesign & refresh, Calendar, new features, and more, the
+          MacIdeas Winter Update is here!
+        </p>
+        <a
+          href="/macblog/updates/macideas/2025/winter.html"
+          class="modal-link"
+          target="_blank"
         >
-        is here with new features, new content, and more 📝!
-        <img src="/maclearn/media/icons/xmark-solid.svg" alt="Close" id="closea" />
-      </h2>
-    </div>
-    <div class="wrap">
-      <h1 class="welcome-hero">Welcome to MacIdeas!</h1>
-      <p class="des-hero">Pick up right where you left off.</p>
-      <div class="tab-links">
-        <a href="tasks.html" id="tasks" class="tab-link">Tasks</a>
-        <a href="notes.html" id="notes" class="tab-link">Notes</a>
-        <a href="drawings.html" id="drawings" class="tab-link">Drawings</a>
-        <a href="lists.html" id="lists" class="tab-link">Lists</a>
+          What's new
+        </a>
       </div>
     </div>
-    
     <script>
-      let clos = document.getElementById("closea");
-      if (localStorage.getItem("macideascloseeee")) {
-        clos.parentElement.parentElement.style.display = "none";
+      let updateModal = document.querySelector(".modal-background");
+      if (localStorage.macideasmodal) {
+        updateModal.style.display = "none";
       }
+    </script>
+    <div class="wrap">
+      <div class="hero">
+        <h1 class="hero-title">Welcome to MacIdeas!</h1>
+        <p class="hero-des">Pick up right where you left off.</p>
+      </div>
+      <div class="apps">
+        <a href="tasks.html" class="app">
+          <p class="text">Tasks</p>
+        </a>
+        <a href="notes.html" class="app">
+          <p class="text">Notes</p>
+        </a>
+        <a href="drawings.html" class="app">
+          <p class="text">Drawings</p>
+        </a>
+        <a href="lists.html" class="app">
+          <p class="text">Lists</p>
+        </a>
+        <a href="calendar.html" class="app">
+          <p class="text">Calendar</p>
+        </a>
+      </div>
+    </div>
+    <script>
       const tasksLink = document.getElementById("tasks");
       const notesLink = document.getElementById("notes");
       const drawingsLink = document.getElementById("drawings");
@@ -101,7 +109,6 @@
       if (localStorage.getItem("listname")) {
         listsLink.textContent = localStorage.getItem("listname");
       }
-
     </script>
   </body>
 </html>
