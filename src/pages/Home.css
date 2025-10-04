@@ -1,0 +1,21 @@
+.wrap {
+    padding-inline: 100px;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    padding-block: 50px;
+    align-items: center;
+    gap: 20px;
+}
+
+.hero-title {
+    color: var(--primary-text);
+    font-size: 40px;
+}
+
+.hero-description {
+    color: var(--secondary-text);
+    font-size: 18px;
+}
