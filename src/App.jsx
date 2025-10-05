@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import Tasks from "./pages/Tasks";
 import Notes from "./pages/Notes";
 import Nav from "./components/Nav";
-import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -12,9 +11,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tasks" element={<Tasks />} />
+        <Route path="/tasks/:id" element={<Tasks />} />
         <Route path="/notes" element={<Notes />} />
       </Routes>
-      <Footer />
     </HashRouter>
   );
 }

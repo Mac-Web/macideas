@@ -1,21 +1,52 @@
 .wrap {
-    padding-inline: 100px;
+  padding-inline: 100px;
+  padding-bottom: 50px;
 }
 
 .hero {
-    display: flex;
-    flex-direction: column;
-    padding-block: 50px;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  padding-block: 30px;
+  align-items: center;
+  gap: 20px;
 }
 
 .hero-title {
-    color: var(--primary-text);
-    font-size: 40px;
+  color: var(--primary-text);
+  font-size: 40px;
 }
 
 .hero-description {
-    color: var(--secondary-text);
-    font-size: 18px;
+  color: var(--secondary-text);
+  font-size: 18px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding-bottom: 50px;
+}
+
+.card {
+  border-radius: 10px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-top: 10px;
+  gap: 5px;
+  border: 2px solid var(--primary-border);
+  cursor: pointer;
+}
+
+.card-type {
+  font-size: 14px;
+  color: var(--secondary-text);
+}
+
+.card-name {
+  font-size: 20px;
+  color: var(--primary-text);
+  line-height: 28px;
 }
