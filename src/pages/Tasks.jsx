@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import TaskPage from "../components/TaskPage";
+import SideItem from "../components/SideItem";
 import "./Tasks.css";
 
 function Tasks() {
@@ -16,11 +17,7 @@ function Tasks() {
           <h2 className="sidebar-title">Your Tasks</h2>
           <ul className="sidebar-list">
             {taskLists.map((taskList, i) => {
-              return (
-                <Link key={i} to={`/tasks/${i}`} className="sidebar-item">
-                  {taskList.name}
-                </Link>
-              );
+              return <SideItem key={i} i={i} taskLists={taskLists} setTaskLists={setTaskLists} taskList={taskList} />;
             })}
           </ul>
         </div>

@@ -2,10 +2,11 @@ import { motion } from "framer-motion";
 import TaskIcon from "./TaskIcon";
 import { useEffect, useRef, useState } from "react";
 
-function Task({ task, tasks, setTasks, id, completed = false }) {
+function Task({ task, tasks, setTasks, star, id, completed = false }) {
   const [hover, setHover] = useState(false);
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(task);
+  const [starred, setStarred] = useState(star);
   const taskTextRef = useRef();
 
   useEffect(() => {
@@ -13,7 +14,7 @@ function Task({ task, tasks, setTasks, id, completed = false }) {
       taskTextRef.current.focus();
     }
   }, [taskTextRef, editing]);
-
+  
   function handleComplete() {
     if (completed) {
       const newCompleted = tasks.completed.filter((task) => task.id !== id);
@@ -26,8 +27,17 @@ function Task({ task, tasks, setTasks, id, completed = false }) {
     }
   }
 
-  function handleEdit() {
-    setEditing(true);
+  function handleStar() {
+    if (starred) {
+      let newList = [...tasks.tasks];
+      newList.find((t) => t.id === id).starred = false;
+      setTasks({ ...tasks, tasks: newList });
+    } else {
+      let newList = [...tasks.tasks];
+      newList.find((t) => t.id === id).starred = true;
+      setTasks({ ...tasks, tasks: newList });
+    }
+    setStarred(!starred);
   }
 
   function handleSave() {
@@ -38,7 +48,11 @@ function Task({ task, tasks, setTasks, id, completed = false }) {
   }
 
   function handleDelete() {
-    setTasks({ ...tasks, tasks: tasks.tasks.filter((task) => task.id !== id) });
+    setTasks({
+      ...tasks,
+      tasks: tasks.tasks.filter((task) => task.id !== id),
+      completed: tasks.completed.filter((task) => task.id !== id),
+    });
   }
 
   return (
@@ -55,6 +69,7 @@ function Task({ task, tasks, setTasks, id, completed = false }) {
         onMouseLeave={() => setHover(false)}
         onClick={handleComplete}
         className="task-img"
+        title={completed ? "Uncomplete task" : "Complete task"}
       />
       {editing ? (
         <input
@@ -71,8 +86,17 @@ function Task({ task, tasks, setTasks, id, completed = false }) {
         <div className="task-text">{text}</div>
       )}
       <div className="task-icons">
-        {!completed&&<TaskIcon src="/macideas/icons/edit.svg" onClick={handleEdit} />}
-        <TaskIcon src="/macideas/icons/delete.svg" onClick={handleDelete} />
+        {!completed && (
+          <>
+            <TaskIcon
+              src={`/macideas/icons/star${starred ? "red" : ""}.svg`}
+              onClick={handleStar}
+              title={starred ? "Unstar task" : "Star task"}
+            />
+            <TaskIcon src="/macideas/icons/edit.svg" onClick={() => setEditing(true)} title="Edit task" />
+          </>
+        )}
+        <TaskIcon src="/macideas/icons/delete.svg" onClick={handleDelete} title="Delete task" />
       </div>
     </motion.div>
   );

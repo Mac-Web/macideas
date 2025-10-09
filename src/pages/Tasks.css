@@ -31,15 +31,80 @@ body {
 .sidebar-item {
   color: var(--secondary-text);
   font-size: 18px;
-  padding: 10px 20px;
+  padding: 5px;
   border-radius: 5px;
   text-decoration: none;
+  position: relative;
+  display: flex;
+  gap: 0px;
+  align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
+.sidebar-item:has(.sidebar-item-emoji:hover) {
+  background-color: var(--primary-bg);
+}
+
+.sidebar-item-emoji {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.sidebar-item-emoji:hover {
+  background-color: var(--secondary-bg);
+}
+
 .sidebar-item:hover {
   background-color: var(--secondary-bg);
+}
+
+.sidebar-item:hover .sidebar-item-icons {
+  display: flex;
+  opacity: 1;
+}
+
+.sidebar-item-text {
+  border: 2px solid transparent;
+  padding: 5px 10px;
+}
+
+.sidebar-item-input {
+  border: 2px solid var(--primary-color);
+  padding: 5px 10px;
+  background-color: transparent;
+  outline: none;
+  color: var(--primary-text);
+  font-size: 18px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.sidebar-item-icons {
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  gap: 10px;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-item-icon {
+  width: 18px;
+  filter: var(--invert);
+  transition: transform 0.3s ease;
+}
+
+.sidebar-item-icon:hover {
+  transform: scale(1.2);
+}
+
+em-emoji-picker {
+  z-index: 100;
+  position: absolute;
+  top: 100%;
+  left: 0;
 }
 
 .tasks-content {

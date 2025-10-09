@@ -44,7 +44,9 @@ function TaskPage({ taskLists, setTaskLists, id }) {
         <div className="tasks-list">
           <AnimatePresence mode="sync">
             {tasks.tasks?.length > 0 ? (
-              tasks.tasks.map((task) => <Task key={task.id} task={task.task} tasks={tasks} setTasks={setTasks} id={task.id} />)
+              tasks.tasks.map((task) => (
+                <Task key={task.id} task={task.task} tasks={tasks} setTasks={setTasks} star={task.starred} id={task.id} />
+              ))
             ) : (
               <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
                 No tasks added. Create one below!
@@ -57,7 +59,14 @@ function TaskPage({ taskLists, setTaskLists, id }) {
             <AnimatePresence mode="sync">
               {tasks.completed?.length > 0 ? (
                 tasks.completed.map((task) => (
-                  <Task key={task.id} task={task.task} tasks={tasks} setTasks={setTasks} id={task.id} completed={true} />
+                  <Task
+                    key={task.id}
+                    task={task.task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    id={task.id}
+                    completed={true}
+                  />
                 ))
               ) : (
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
