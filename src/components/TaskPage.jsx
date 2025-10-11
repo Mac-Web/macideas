@@ -13,11 +13,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
   useEffect(() => {
     setTasks(taskLists[id] || blankList);
     setTaskId(taskLists[id]?.id || 0);
-  }, [id]);
-
-  useEffect(() => {
-    localStorage.setItem("macideas-tasks", JSON.stringify(taskLists));
-  }, [taskLists]);
+  }, [id, taskLists]);
 
   useEffect(() => {
     setTaskLists([...taskLists.slice(0, id), tasks, ...taskLists.slice(id + 1)]);
@@ -44,8 +40,8 @@ function TaskPage({ taskLists, setTaskLists, id }) {
         <div className="tasks-list">
           <AnimatePresence mode="sync">
             {tasks.tasks?.length > 0 ? (
-              tasks.tasks.map((task) => (
-                <Task key={task.id} task={task.task} tasks={tasks} setTasks={setTasks} star={task.starred} id={task.id} />
+              tasks.tasks.map((task, i) => (
+                <Task key={i} task={task.task} tasks={tasks} setTasks={setTasks} star={task.starred} id={task.id} />
               ))
             ) : (
               <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
@@ -59,14 +55,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
             <AnimatePresence mode="sync">
               {tasks.completed?.length > 0 ? (
                 tasks.completed.map((task) => (
-                  <Task
-                    key={task.id}
-                    task={task.task}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    id={task.id}
-                    completed={true}
-                  />
+                  <Task key={task.id} task={task.task} tasks={tasks} setTasks={setTasks} id={task.id} completed={true} />
                 ))
               ) : (
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">

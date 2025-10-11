@@ -11,6 +11,7 @@ body {
   width: 210px;
   border-right: 2px solid var(--primary-border);
   height: calc(100vh - 70px);
+  position: relative;
 }
 
 .sidebar-title {
@@ -105,6 +106,23 @@ em-emoji-picker {
   position: absolute;
   top: 100%;
   left: 0;
+}
+
+.sidebar-create {
+  position: absolute;
+  bottom: 20px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-border);
+  width: calc(100% - 15px);
+  color: var(--secondary-text);
+  text-align: center;
+  font-size: 18px;
+  padding-block: 10px;
+  cursor: pointer;
+}
+
+.sidebar-create:hover {
+  background-color: var(--secondary-bg);
 }
 
 .tasks-content {

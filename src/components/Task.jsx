@@ -14,7 +14,12 @@ function Task({ task, tasks, setTasks, star, id, completed = false }) {
       taskTextRef.current.focus();
     }
   }, [taskTextRef, editing]);
-  
+
+  useEffect(() => {
+    setText(task);
+    setStarred(star);
+  }, [task, star]);
+
   function handleComplete() {
     if (completed) {
       const newCompleted = tasks.completed.filter((task) => task.id !== id);

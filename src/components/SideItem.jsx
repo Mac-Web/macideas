@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState, useEffect, useRef } from "react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -10,6 +10,7 @@ function SideItem({ taskLists, setTaskLists, taskList, i }) {
   const [name, setName] = useState(taskList.name);
   const emojiIcon = useRef();
   const listTextRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (editing) {
@@ -46,6 +47,16 @@ function SideItem({ taskLists, setTaskLists, taskList, i }) {
     setTaskLists(newTaskLists);
   }
 
+  function handleDelete(e) {
+    e.preventDefault();
+    if (confirm("Are you sure you want to delete this task list?")) {
+      const newTaskLists = [...taskLists];
+      newTaskLists.splice(i, 1);
+      setTaskLists(newTaskLists);
+      navigate("/tasks");
+    }
+  }
+
   return (
     <Link to={`/tasks/${i}`} className="sidebar-item">
       <div className="sidebar-item-emoji" title="Pick emoji" ref={emojiIcon} onClick={() => setEmoji(true)}>
@@ -72,7 +83,12 @@ function SideItem({ taskLists, setTaskLists, taskList, i }) {
           title="Edit task list"
           onClick={() => setEditing(true)}
         />
-        <img src="/macideas/icons/delete.svg" className="sidebar-item-icon" title="Delete task list" />
+        <img
+          src="/macideas/icons/delete.svg"
+          className="sidebar-item-icon"
+          title="Delete task list"
+          onClick={(e) => handleDelete(e)}
+        />
       </div>
       {emoji && (
         <Picker
