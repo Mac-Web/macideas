@@ -1,13 +1,19 @@
 import { motion } from "framer-motion";
 import TaskIcon from "./TaskIcon";
 import { useEffect, useRef, useState } from "react";
+import LabelList from "./LabelList";
 
-function Task({ task, tasks, setTasks, star, id, completed = false }) {
+function Task({ task, tasks, setTasks, star, priority, tag, id, completed = false }) {
   const [hover, setHover] = useState(false);
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(task);
   const [starred, setStarred] = useState(star);
+  const [priorityLevel, setPriorityLevel] = useState(priority);
+  const [label, setLabel] = useState(tag);
+  const [labelList, setLabelList] = useState(false);
+  //TODO: change it so it passes the entire task object as a prop so only one state is needed
   const taskTextRef = useRef();
+  const iconRef = useRef();
 
   useEffect(() => {
     if (editing) {
@@ -18,6 +24,7 @@ function Task({ task, tasks, setTasks, star, id, completed = false }) {
   useEffect(() => {
     setText(task);
     setStarred(star);
+    setPriorityLevel(priority);
   }, [task, star]);
 
   function handleComplete() {
@@ -30,6 +37,13 @@ function Task({ task, tasks, setTasks, star, id, completed = false }) {
       const newCompleted = [...tasks.completed, tasks.tasks.find((task) => task.id == id)];
       setTasks({ ...tasks, tasks: newList, completed: newCompleted });
     }
+  }
+
+  function handlePriority(e) {
+    let newList = [...tasks.tasks];
+    newList.find((t) => t.id === id).priority = e.target.value;
+    setTasks({ ...tasks, tasks: newList });
+    setPriorityLevel(e.target.value);
   }
 
   function handleStar() {
@@ -88,11 +102,26 @@ function Task({ task, tasks, setTasks, star, id, completed = false }) {
           className="text-input"
         />
       ) : (
-        <div className="task-text">{text}</div>
+        <>
+          <div className="task-text">{text}</div>
+          <select
+            className={`task-tag ${priorityLevel ? "p-" + priorityLevel : ""}`}
+            value={priorityLevel}
+            onChange={(e) => handlePriority(e)}
+          >
+            <option value="0">None</option>
+            <option value="1">Low</option>
+            <option value="2">Mid</option>
+            <option value="3">High</option>
+          </select>
+          {labelList && <LabelList setLabelList={setLabelList} icon={iconRef.current} />}
+          {console.log(iconRef)}
+        </>
       )}
       <div className="task-icons">
         {!completed && (
           <>
+            <><TaskIcon src="/macideas/icons/tag.svg" ref={iconRef} onClick={() => setLabelList(true)} title="Edit label" /></>
             <TaskIcon
               src={`/macideas/icons/star${starred ? "red" : ""}.svg`}
               onClick={handleStar}

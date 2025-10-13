@@ -176,6 +176,95 @@ em-emoji-picker {
   filter: var(--invert);
 }
 
+.task-tag {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  font-size: 13px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  padding-block: 5px;
+  width: 45px;
+  margin-left: 5px;
+  cursor: pointer;
+  appearance: none;
+  text-align: center;
+}
+
+.p-1 {
+  background-color: green;
+}
+
+.p-2 {
+  background-color: rgb(250, 140, 0);
+}
+
+.p-3 {
+  background-color: red;
+}
+
+.label-list {
+  position: absolute;
+  right: -40px;
+  top: 40px;
+  background-color: var(--primary-bg);
+  border: 2px solid var(--primary-border);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 5px;
+  border-radius: 5px;
+  overflow: auto;
+  width: 150px;
+}
+
+.label-list .message {
+  margin-block: 10px 20px;
+}
+
+.label-items {
+  max-height: 200px;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+
+.label-item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  padding: 10px 5px;
+}
+
+.label-item input {
+  cursor: pointer;
+}
+
+.label-item img {
+  width: 15px;
+  right: 5px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.add-label {
+  position: sticky;
+  bottom: -5px;
+  width: 100%;
+}
+
+.add-label input {
+  width: 100%;
+  border: 1px solid var(--primary-border);
+  outline: none;
+  background-color: var(--primary-bg);
+  border-radius: 5px;
+  color: var(--primary-text);
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
 .task-icons {
   position: absolute;
   right: 15px;
@@ -223,7 +312,7 @@ em-emoji-picker {
   border-radius: 5px;
   padding: 5px 10px;
   border: 2px solid var(--primary-color);
-  width: 90%;
+  width: calc(100% - 150px);
 }
 
 .tasks-completed {
@@ -237,9 +326,9 @@ em-emoji-picker {
 }
 
 .completed-item {
-    color: var(--secondary-text);
-    filter: brightness(70%);
-    text-decoration: line-through;
+  color: var(--secondary-text);
+  filter: brightness(70%);
+  text-decoration: line-through;
 }
 
 .completed-btn {
