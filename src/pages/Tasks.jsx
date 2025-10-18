@@ -7,7 +7,10 @@ import "./Tasks.css";
 
 function Tasks() {
   const { id } = useParams();
-  const [taskLists, setTaskLists] = useState(JSON.parse(localStorage.getItem("macideas-tasks")) || []);
+  const [taskLists, setTaskLists] = useState(() => {
+    const savedLists = JSON.parse(localStorage.getItem("macideas-tasks")) || [];
+    return savedLists;
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +27,6 @@ function Tasks() {
     const newList = [...taskLists];
     newList[taskLists.length] = { tasks: [], id: 0, name: "New List" };
     setTaskLists(newList);
-    console.log(taskLists);
     navigate(`/tasks/${taskLists.length}`);
   }
 

@@ -176,7 +176,8 @@ em-emoji-picker {
   filter: var(--invert);
 }
 
-.task-tag {
+.task-tag,
+.task-label {
   background-color: var(--primary-bg);
   color: var(--primary-text);
   font-size: 13px;
@@ -201,6 +202,17 @@ em-emoji-picker {
 
 .p-3 {
   background-color: red;
+}
+
+.task-labels {
+  display: flex;
+  margin-left: 10px;
+}
+
+.task-label {
+  width: fit-content;
+  padding-inline: 10px;
+  cursor: default;
 }
 
 .label-list {
@@ -230,10 +242,11 @@ em-emoji-picker {
 
 .label-item {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   align-items: center;
   position: relative;
   width: 100%;
+  cursor: pointer;
   padding: 10px 5px;
 }
 

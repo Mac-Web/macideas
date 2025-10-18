@@ -3,13 +3,13 @@ import TaskIcon from "./TaskIcon";
 import { useEffect, useRef, useState } from "react";
 import LabelList from "./LabelList";
 
-function Task({ task, tasks, setTasks, star, priority, tag, id, completed = false }) {
+function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels, completed = false }) {
   const [hover, setHover] = useState(false);
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(task);
   const [starred, setStarred] = useState(star);
   const [priorityLevel, setPriorityLevel] = useState(priority);
-  const [label, setLabel] = useState(tag);
+  const [displayed, setDisplayed] = useState(tag);
   const [labelList, setLabelList] = useState(false);
   //TODO: change it so it passes the entire task object as a prop so only one state is needed
   const taskTextRef = useRef();
@@ -26,6 +26,14 @@ function Task({ task, tasks, setTasks, star, priority, tag, id, completed = fals
     setStarred(star);
     setPriorityLevel(priority);
   }, [task, star]);
+
+  useEffect(() => {
+    if (labelList) {
+      let newList = [...tasks.tasks];
+      newList.find((t) => t.id === id).labels = displayed;
+      setTasks({ ...tasks, tasks: newList });
+    }
+  }, [displayed]);
 
   function handleComplete() {
     if (completed) {
@@ -114,14 +122,30 @@ function Task({ task, tasks, setTasks, star, priority, tag, id, completed = fals
             <option value="2">Mid</option>
             <option value="3">High</option>
           </select>
-          {labelList && <LabelList setLabelList={setLabelList} icon={iconRef.current} />}
-          {console.log(iconRef)}
+          <div className="task-labels">
+          {displayed.sort().map((display) => {
+            if (labels.includes(display)) {
+              return <div className="task-label" title="Task label">{display}</div>;
+            }
+          })}</div>
+          {labelList && (
+            <LabelList
+              setLabelList={setLabelList}
+              labels={labels}
+              displayed={displayed}
+              setLabels={setLabels}
+              setDisplayed={setDisplayed}
+              icon={iconRef.current}
+            />
+          )}
         </>
       )}
       <div className="task-icons">
         {!completed && (
           <>
-            <><TaskIcon src="/macideas/icons/tag.svg" ref={iconRef} onClick={() => setLabelList(true)} title="Edit label" /></>
+            <>
+              <TaskIcon src="/macideas/icons/tag.svg" ref={iconRef} onClick={() => setLabelList(true)} title="Edit labels" />
+            </>
             <TaskIcon
               src={`/macideas/icons/star${starred ? "red" : ""}.svg`}
               onClick={handleStar}

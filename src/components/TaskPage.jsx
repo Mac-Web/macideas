@@ -9,6 +9,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
   const [taskId, setTaskId] = useState(taskLists[id]?.id || 0);
   const [taskInput, setTaskInput] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [labels, setLabels] = useState(JSON.parse(localStorage.getItem("macideas-labels")) || []);
 
   useEffect(() => {
     setTasks(taskLists[id] || blankList);
@@ -19,11 +20,15 @@ function TaskPage({ taskLists, setTaskLists, id }) {
     setTaskLists([...taskLists.slice(0, id), tasks, ...taskLists.slice(id + 1)]);
   }, [tasks]);
 
+  useEffect(() => {
+    localStorage.setItem("macideas-labels", JSON.stringify(labels));
+  }, [labels]);
+
   function handleSubmit(e) {
     e.preventDefault();
     if (taskInput.trim().length > 0) {
       let taskList = tasks.tasks;
-      let newTask = { task: taskInput.trim(), id: taskId };
+      let newTask = { task: taskInput.trim(), id: taskId, labels: [] };
       if (taskList) {
         setTasks({ ...tasks, tasks: [...taskList, newTask], id: taskId + 1 });
       } else {
@@ -40,18 +45,22 @@ function TaskPage({ taskLists, setTaskLists, id }) {
         <div className="tasks-list">
           <AnimatePresence mode="sync">
             {tasks.tasks?.length > 0 ? (
-              tasks.tasks.map((task, i) => (
-                <Task
-                  key={i}
-                  task={task.task}
-                  tasks={tasks}
-                  setTasks={setTasks}
-                  priority={task.priority || 0}
-                  tag={task.label}
-                  star={task.starred}
-                  id={task.id}
-                />
-              ))
+              tasks.tasks.map((task, i) => {
+                return (
+                  <Task
+                    key={i}
+                    task={task.task}
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    priority={task.priority || 0}
+                    tag={task.labels}
+                    star={task.starred}
+                    id={task.id}
+                      labels={labels}
+                      setLabels={setLabels}
+                  />
+                );
+              })
             ) : (
               <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
                 No tasks added. Create one below!
@@ -63,18 +72,22 @@ function TaskPage({ taskLists, setTaskLists, id }) {
           <div className="tasks-completed">
             <AnimatePresence mode="sync">
               {tasks.completed?.length > 0 ? (
-                tasks.completed.map((task) => (
-                  <Task
-                    key={task.id}
-                    task={task.task}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    priority={task.priority || 0}
-                    tag={task.label}
-                    id={task.id}
-                    completed={true}
-                  />
-                ))
+                tasks.completed.map((task) => {
+                  return (
+                    <Task
+                      key={task.id}
+                      task={task.task}
+                      tasks={tasks}
+                      setTasks={setTasks}
+                      priority={task.priority || 0}
+                      tag={task.labels}
+                      id={task.id}
+                      completed={true}
+                      labels={labels}
+                      setLabels={setLabels}
+                    />
+                  );
+                })
               ) : (
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
                   No completed tasks. Go get some work done!

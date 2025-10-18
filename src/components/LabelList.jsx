@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-function LabelList({ setLabelList, icon }) {
-  const [labels, setLabels] = useState(JSON.parse(localStorage.getItem("macideas-labels")) || []);
+function LabelList({ setLabelList,displayed,setDisplayed,labels,setLabels, icon }) {
   const [newLabel, setNewLabel] = useState("");
   const listRef = useRef();
 
@@ -17,14 +16,18 @@ function LabelList({ setLabelList, icon }) {
     };
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("macideas-labels", JSON.stringify(labels));
-  }, [labels]);
-
   function handleAdd(e) {
     e.preventDefault();
     setLabels([...labels, newLabel]);
     setNewLabel("");
+  }
+
+  function handleCheck(e, i) {
+    if (e.target.checked) {
+      setDisplayed([...displayed, labels[i]]);
+    } else {
+      setDisplayed(displayed.filter((label) => label !== labels[i]));
+    }
   }
 
   function handleRemove(i) {
@@ -39,11 +42,11 @@ function LabelList({ setLabelList, icon }) {
         <div className="label-items">
           {labels.map((label, i) => {
             return (
-              <div className="label-item">
-                <input type="checkbox" />
+              <label className="label-item">
+                <input type="checkbox" checked={displayed.includes(label)} onChange={(e) => handleCheck(e, i)} />
                 {label}
                 <img src="/macideas/icons/delete.svg" onClick={() => handleRemove(i)} />
-              </div>
+              </label>
             );
           })}
         </div>
