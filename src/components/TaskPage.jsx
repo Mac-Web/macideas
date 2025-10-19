@@ -56,8 +56,9 @@ function TaskPage({ taskLists, setTaskLists, id }) {
                     tag={task.labels}
                     star={task.starred}
                     id={task.id}
-                      labels={labels}
-                      setLabels={setLabels}
+                    labels={labels}
+                    setLabels={setLabels}
+                    time={task.date ? task.date : null}
                   />
                 );
               })
@@ -85,6 +86,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
                       completed={true}
                       labels={labels}
                       setLabels={setLabels}
+                    time={task.date ? task.date : null}
                     />
                   );
                 })

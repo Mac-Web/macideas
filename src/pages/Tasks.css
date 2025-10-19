@@ -278,6 +278,27 @@ em-emoji-picker {
   padding: 5px 10px;
 }
 
+.task-calendar {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  z-index: 100;
+  border: 2px solid var(--primary-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--primary-bg);
+}
+
+.clear-calendar {
+  text-align: center;
+  padding-block: 5px;
+  font-size: 16px;
+  border-top: 2px solid var(--primary-border);
+  cursor: pointer;
+  color: var(--secondary-text);
+  margin-top: -4px;
+}
+
 .task-icons {
   position: absolute;
   right: 15px;
@@ -312,9 +333,28 @@ em-emoji-picker {
   font-size: 20px;
 }
 
+.task-info {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  gap: 3px;
+}
+
+.tasks-item:has(.task-date) {
+  padding-block: 5px;
+}
+
+.task-info:has(.task-date) {
+  padding-block: 0px;
+}
+
 .task-text {
   border: 2px solid transparent;
-  padding: 5px 10px;
+}
+
+.task-date {
+  font-size: 13px;
+  color: var(--secondary-text);
 }
 
 .text-input {

@@ -25,7 +25,7 @@ function Tasks() {
 
   function handleNewList() {
     const newList = [...taskLists];
-    newList[taskLists.length] = { tasks: [], id: 0, name: "New List" };
+    newList[taskLists.length] = { tasks: [],completed:[], id: 0, name: "New List" };
     setTaskLists(newList);
     navigate(`/tasks/${taskLists.length}`);
   }

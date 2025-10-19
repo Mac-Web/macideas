@@ -1,9 +1,11 @@
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { motion } from "framer-motion";
 import TaskIcon from "./TaskIcon";
 import { useEffect, useRef, useState } from "react";
 import LabelList from "./LabelList";
 
-function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels, completed = false }) {
+function Task({ task, tasks, setTasks, star, priority, tag, id, labels, setLabels, completed = false, time = null }) {
   const [hover, setHover] = useState(false);
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(task);
@@ -11,9 +13,25 @@ function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels,
   const [priorityLevel, setPriorityLevel] = useState(priority);
   const [displayed, setDisplayed] = useState(tag);
   const [labelList, setLabelList] = useState(false);
+  const [calendar, setCalendar] = useState(false);
+  const [date, setDate] = useState(time || new Date());
   //TODO: change it so it passes the entire task object as a prop so only one state is needed
   const taskTextRef = useRef();
   const iconRef = useRef();
+  const calendarRef = useRef();
+  const dateIconRef = useRef();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (!calendarRef.current.contains(e.target) && e.target !== dateIconRef.current) {
+        setCalendar(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   useEffect(() => {
     if (editing) {
@@ -54,6 +72,22 @@ function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels,
     setPriorityLevel(e.target.value);
   }
 
+  function handleDate(date) {
+    setDate(date);
+    let newList = [...tasks.tasks];
+    newList.find((t) => t.id === id).date = date;
+    setTasks({ ...tasks, tasks: newList });
+    setCalendar(false);
+  }
+
+  function handleClearDate() {
+    setDate(null);
+    let newList = [...tasks.tasks];
+    newList.find((t) => t.id === id).date = null;
+    setTasks({ ...tasks, tasks: newList });
+    setCalendar(false);
+  }
+
   function handleStar() {
     if (starred) {
       let newList = [...tasks.tasks];
@@ -78,7 +112,7 @@ function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels,
     setTasks({
       ...tasks,
       tasks: tasks.tasks.filter((task) => task.id !== id),
-      completed: tasks.completed.filter((task) => task.id !== id),
+      completed: tasks.completed?.filter((task) => task.id !== id),
     });
   }
 
@@ -111,7 +145,14 @@ function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels,
         />
       ) : (
         <>
-          <div className="task-text">{text}</div>
+          <div className="task-info">
+            <div className="task-text">{text}</div>
+            {time && (
+              <div className="task-date">
+                {new Date(time).getMonth() + 1}/{new Date(time).getDate()}/{new Date(time).getFullYear()}
+              </div>
+            )}
+          </div>
           <select
             className={`task-tag ${priorityLevel ? "p-" + priorityLevel : ""}`}
             value={priorityLevel}
@@ -123,11 +164,16 @@ function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels,
             <option value="3">High</option>
           </select>
           <div className="task-labels">
-          {displayed.sort().map((display) => {
-            if (labels.includes(display)) {
-              return <div className="task-label" title="Task label">{display}</div>;
-            }
-          })}</div>
+            {displayed.sort().map((display) => {
+              if (labels.includes(display)) {
+                return (
+                  <div className="task-label" title="Task label">
+                    {display}
+                  </div>
+                );
+              }
+            })}
+          </div>
           {labelList && (
             <LabelList
               setLabelList={setLabelList}
@@ -138,14 +184,23 @@ function Task({ task, tasks, setTasks, star, priority, tag, id,labels,setLabels,
               icon={iconRef.current}
             />
           )}
+          {calendar && (
+            <div ref={calendarRef} className="task-calendar">
+              <DatePicker selected={date} onChange={(date) => handleDate(date)} inline />
+              {time && (
+                <div className="clear-calendar" onClick={handleClearDate}>
+                  Clear date
+                </div>
+              )}
+            </div>
+          )}
         </>
       )}
       <div className="task-icons">
         {!completed && (
           <>
-            <>
-              <TaskIcon src="/macideas/icons/tag.svg" ref={iconRef} onClick={() => setLabelList(true)} title="Edit labels" />
-            </>
+            <TaskIcon src="/macideas/icons/date.svg" onClick={() => setCalendar(true)} ref={dateIconRef} title="Add date" />
+            <TaskIcon src="/macideas/icons/tag.svg" ref={iconRef} onClick={() => setLabelList(true)} title="Edit labels" />
             <TaskIcon
               src={`/macideas/icons/star${starred ? "red" : ""}.svg`}
               onClick={handleStar}
