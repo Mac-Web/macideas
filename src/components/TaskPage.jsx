@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Task from "../components/Task";
+import TaskIcon from "./TaskIcon";
+import LabelList from "./LabelList";
 
 const blankList = { tasks: [], completed: [], id: 0, name: "New List" };
 
@@ -10,6 +14,28 @@ function TaskPage({ taskLists, setTaskLists, id }) {
   const [taskInput, setTaskInput] = useState("");
   const [completed, setCompleted] = useState(false);
   const [labels, setLabels] = useState(JSON.parse(localStorage.getItem("macideas-labels")) || []);
+  const [starred, setStarred] = useState(false);
+  const [priorityLevel, setPriorityLevel] = useState(0);
+  const [labelList, setLabelList] = useState(false);
+  const [displayed, setDisplayed] = useState([]);
+  const [calendar, setCalendar] = useState(false);
+  const [date, setDate] = useState(null);
+  //TODO: change it to only one state managing all the properties of the new task
+  const iconRef = useRef();
+  const calendarRef = useRef();
+  const dateIconRef = useRef();
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (!calendarRef.current.contains(e.target) && e.target !== dateIconRef.current) {
+        setCalendar(false);
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   useEffect(() => {
     setTasks(taskLists[id] || blankList);
@@ -28,7 +54,14 @@ function TaskPage({ taskLists, setTaskLists, id }) {
     e.preventDefault();
     if (taskInput.trim().length > 0) {
       let taskList = tasks.tasks;
-      let newTask = { task: taskInput.trim(), id: taskId, labels: [] };
+      let newTask = {
+        task: taskInput.trim(),
+        priority: priorityLevel,
+        date: date,
+        labels: displayed,
+        starred: starred,
+        id: taskId,
+      };
       if (taskList) {
         setTasks({ ...tasks, tasks: [...taskList, newTask], id: taskId + 1 });
       } else {
@@ -86,7 +119,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
                       completed={true}
                       labels={labels}
                       setLabels={setLabels}
-                    time={task.date ? task.date : null}
+                      time={task.date ? task.date : null}
                     />
                   );
                 })
@@ -107,6 +140,18 @@ function TaskPage({ taskLists, setTaskLists, id }) {
         />
         Completed ({tasks.completed?.length || 0})
       </div>
+      {labelList && (
+        <div className="form-labels">
+          <LabelList
+            setLabelList={setLabelList}
+            labels={labels}
+            displayed={displayed}
+            setLabels={setLabels}
+            setDisplayed={setDisplayed}
+            icon={iconRef.current}
+          />
+        </div>
+      )}
       <form className="tasks-bar" onSubmit={(e) => handleSubmit(e)}>
         <input
           type="text"
@@ -115,6 +160,41 @@ function TaskPage({ taskLists, setTaskLists, id }) {
           placeholder="Enter your task here"
           className="tasks-input"
         />
+        {calendar && (
+          <div className="task-calendar" ref={calendarRef}>
+            <DatePicker
+              selected={date}
+              onChange={(date) => {
+                setDate(date);
+                setCalendar(false);
+              }}
+              inline
+            />
+            <div className="clear-calendar" onClick={() => setDate(null)}>
+              Clear date
+            </div>
+          </div>
+        )}
+        <div className="task-icons">
+          <select
+            className={`task-tag ${priorityLevel ? "p-" + priorityLevel : ""}`}
+            value={priorityLevel}
+            onChange={(e) => setPriorityLevel(e.target.value)}
+            title="Set priority"
+          >
+            <option value="0">None</option>
+            <option value="1">Low</option>
+            <option value="2">Mid</option>
+            <option value="3">High</option>
+          </select>
+          <TaskIcon src="/macideas/icons/date.svg" ref={dateIconRef} onClick={() => setCalendar(true)} title="Add date" />
+          <TaskIcon src="/macideas/icons/tag.svg" ref={iconRef} onClick={() => setLabelList(true)} title="Edit labels" />
+          <TaskIcon
+            src={`/macideas/icons/star${starred ? "red" : ""}.svg`}
+            onClick={() => setStarred(!starred)}
+            title={starred ? "Unstar task" : "Star task"}
+          />
+        </div>
       </form>
     </div>
   );

@@ -193,15 +193,15 @@ em-emoji-picker {
 }
 
 .p-1 {
-  background-color: green;
+  background-color: green !important;
 }
 
 .p-2 {
-  background-color: rgb(250, 140, 0);
+  background-color: rgb(250, 140, 0) !important;
 }
 
 .p-3 {
-  background-color: red;
+  background-color: red !important;
 }
 
 .task-labels {
@@ -248,6 +248,13 @@ em-emoji-picker {
   width: 100%;
   cursor: pointer;
   padding: 10px 5px;
+  color: var(--primary-text);
+}
+
+.form-labels .label-list {
+  right: 90px;
+  top: auto;
+  bottom: 90px;
 }
 
 .label-item input {
@@ -289,6 +296,11 @@ em-emoji-picker {
   background-color: var(--primary-bg);
 }
 
+.tasks-bar .task-calendar {
+  bottom: 60px;
+  top:-280px;
+}
+
 .clear-calendar {
   text-align: center;
   padding-block: 5px;
@@ -318,9 +330,15 @@ em-emoji-picker {
   position: absolute;
   bottom: 20px;
   left: 100px;
-  width: calc(100% - 200px);
+  width: calc(100% - 190px);
   border: 2px solid var(--primary-border);
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.tasks-bar .task-tag {
+  background-color: var(--secondary-bg);
 }
 
 .tasks-input {

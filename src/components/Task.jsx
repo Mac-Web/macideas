@@ -157,6 +157,7 @@ function Task({ task, tasks, setTasks, star, priority, tag, id, labels, setLabel
             className={`task-tag ${priorityLevel ? "p-" + priorityLevel : ""}`}
             value={priorityLevel}
             onChange={(e) => handlePriority(e)}
+            title="Set priority"
           >
             <option value="0">None</option>
             <option value="1">Low</option>
