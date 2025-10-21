@@ -61,6 +61,10 @@ body {
   background-color: var(--secondary-bg);
 }
 
+.sidebar-selected {
+  background-color: var(--secondary-bg);
+}
+
 .sidebar-item:hover .sidebar-item-icons {
   display: flex;
   opacity: 1;
@@ -137,10 +141,54 @@ em-emoji-picker {
   margin-top: 200px;
 }
 
+.tasks-filters {
+  display: flex;
+  padding-inline: 100px;
+  gap: 50px;
+  padding-block: 15px;
+}
+
+.filter-bar {
+  flex: 1;
+  background-color: transparent;
+  border: 2px solid var(--primary-border);
+  border-radius: 5px;
+  font-size: 16px;
+  color: var(--primary-text);
+  padding: 10px 20px;
+  outline: none;
+}
+
+.tasks-filter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-icon {
+  width: 25px;
+  filter: var(--invert);
+}
+
+.filter-dropdown {
+  border: none;
+  outline: none;
+  background-color: var(--secondary-bg);
+  appearance: none;
+  border-radius: 5px;
+  color: var(--secondary-text);
+  text-align: center;
+  cursor: pointer;
+  width: fit-content;
+  font-size: 16px;
+  padding-inline: 10px;
+  height: 35px;
+}
+
 .tasks-lists {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 280px);
   gap: 15px;
 }
 
@@ -152,7 +200,7 @@ em-emoji-picker {
   max-height: 100%;
   overflow: auto;
   padding-inline: 100px 90px;
-  padding-block: 20px;
+  padding-bottom: 20px;
   overflow-x: hidden;
   flex: 1.5;
 }

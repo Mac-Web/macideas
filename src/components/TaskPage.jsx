@@ -20,6 +20,9 @@ function TaskPage({ taskLists, setTaskLists, id }) {
   const [displayed, setDisplayed] = useState([]);
   const [calendar, setCalendar] = useState(false);
   const [date, setDate] = useState(null);
+  const [filterValue, setFilterValue] = useState("all");
+  const [filteredTasks, setFilteredTasks] = useState(tasks.tasks);
+  const [sortValue, setSortValue] = useState("create");
   //TODO: change it to only one state managing all the properties of the new task
   const iconRef = useRef();
   const calendarRef = useRef();
@@ -27,7 +30,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
 
   useEffect(() => {
     const handleClick = (e) => {
-      if (!calendarRef.current.contains(e.target) && e.target !== dateIconRef.current) {
+      if (!calendarRef.current?.contains(e.target) && e.target !== dateIconRef.current) {
         setCalendar(false);
       }
     };
@@ -38,9 +41,102 @@ function TaskPage({ taskLists, setTaskLists, id }) {
   }, []);
 
   useEffect(() => {
+    setFilterValue("all");
+  }, [id]);
+
+  useEffect(() => {
     setTasks(taskLists[id] || blankList);
+    let newTasks;
+    switch (filterValue) {
+      case "all":
+        newTasks = tasks.tasks;
+        break;
+      case "starred":
+        newTasks = tasks.tasks.filter((task) => task.starred);
+        break;
+      default:
+        newTasks = tasks.tasks.filter((task) => task.labels.includes(filterValue));
+        break;
+    }
+    switch (sortValue) {
+      case "create":
+        newTasks.sort((a, b) => new Date(a.created) - new Date(b.created));
+        break;
+      case "priority":
+        newTasks.sort((a, b) => b.priority - a.priority);
+        break;
+      case "date":
+        newTasks.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      case "starred":
+        newTasks.sort((a, b) => b.starred - a.starred);
+        break;
+      case "name":
+        newTasks.sort((a, b) => a.task.localeCompare(b.task));
+        break;
+      default:
+        break;
+    }
+    setFilteredTasks(newTasks);
     setTaskId(taskLists[id]?.id || 0);
   }, [id, taskLists]);
+
+  useEffect(() => {
+    let newTasks;
+    switch (filterValue) {
+      case "all":
+        newTasks = tasks.tasks;
+        break;
+      case "starred":
+        newTasks = tasks.tasks.filter((task) => task.starred);
+        break;
+      default:
+        newTasks = tasks.tasks.filter((task) => task.labels.includes(filterValue));
+        break;
+    }
+    switch (sortValue) {
+      case "create":
+        newTasks.sort((a, b) => new Date(a.created) - new Date(b.created));
+        break;
+      case "priority":
+        newTasks.sort((a, b) => b.priority - a.priority);
+        break;
+      case "date":
+        newTasks.sort((a, b) => new Date(b.date) - new Date(a.date));
+        break;
+      case "starred":
+        newTasks.sort((a, b) => b.starred - a.starred);
+        break;
+      case "name":
+        newTasks.sort((a, b) => a.task.localeCompare(b.task));
+        break;
+      default:
+        break;
+    }
+    setFilteredTasks(newTasks);
+  }, [filterValue]);
+
+  useEffect(() => {
+    switch (sortValue) {
+      case "create":
+        setFilteredTasks([...filteredTasks].sort((a, b) => new Date(a.created) - new Date(b.created)));
+        break;
+      case "priority":
+        setFilteredTasks([...filteredTasks].sort((a, b) => b.priority - a.priority));
+        break;
+      case "date":
+        setFilteredTasks([...filteredTasks].sort((a, b) => new Date(a.date) - new Date(b.date)));
+        break;
+      case "starred":
+        setFilteredTasks([...filteredTasks].sort((a, b) => b.starred - a.starred));
+        break;
+      case "name":
+        setFilteredTasks([...filteredTasks].sort((a, b) => a.task.localeCompare(b.task)));
+        break;
+      default:
+        break;
+    }
+  }, [sortValue]);
 
   useEffect(() => {
     setTaskLists([...taskLists.slice(0, id), tasks, ...taskLists.slice(id + 1)]);
@@ -61,6 +157,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
         labels: displayed,
         starred: starred,
         id: taskId,
+        created: new Date(),
       };
       if (taskList) {
         setTasks({ ...tasks, tasks: [...taskList, newTask], id: taskId + 1 });
@@ -69,16 +166,43 @@ function TaskPage({ taskLists, setTaskLists, id }) {
       }
       setTaskId(taskId + 1);
       setTaskInput("");
+      setPriorityLevel(0);
+      setDate(null);
+      setLabels([]);
+      setStarred(false);
     }
   }
 
   return (
     <div className="tasks-content">
+      <div className="tasks-filters">
+        <input type="text" placeholder={"Search tasks in " + taskLists[id].name} className="filter-bar" />
+        <div className="tasks-filter">
+          <img src="/macideas/icons/filter.svg" title="Filter by" className="filter-icon" />
+          <select className="filter-dropdown" value={filterValue} onChange={(e) => setFilterValue(e.target.value)}>
+            <option value="all">All</option>
+            <option value="starred">Starred</option>
+            {labels.map((label) => {
+              return <option value={label}>{label}</option>;
+            })}
+          </select>
+        </div>
+        <div className="tasks-filter">
+          <img src="/macideas/icons/sort.svg" title="Sort by" className="filter-icon" />
+          <select className="filter-dropdown" value={sortValue} onChange={(e) => setSortValue(e.target.value)}>
+            <option value="create">Date created</option>
+            <option value="priority">Priority</option>
+            <option value="date">Due date</option>
+            <option value="starred">Starred</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+      </div>
       <div className="tasks-lists">
         <div className="tasks-list">
           <AnimatePresence mode="sync">
-            {tasks.tasks?.length > 0 ? (
-              tasks.tasks.map((task, i) => {
+            {filteredTasks.length > 0 ? (
+              filteredTasks.map((task, i) => {
                 return (
                   <Task
                     key={i}

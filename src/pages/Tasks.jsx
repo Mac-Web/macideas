@@ -25,7 +25,7 @@ function Tasks() {
 
   function handleNewList() {
     const newList = [...taskLists];
-    newList[taskLists.length] = { tasks: [],completed:[], id: 0, name: "New List" };
+    newList[taskLists.length] = { tasks: [], completed: [], id: 0, name: "New List" };
     setTaskLists(newList);
     navigate(`/tasks/${taskLists.length}`);
   }
@@ -39,7 +39,16 @@ function Tasks() {
           <ul className="sidebar-list">
             {taskLists.length > 0 ? (
               taskLists.map((taskList, i) => {
-                return <SideItem key={i} i={i} taskLists={taskLists} setTaskLists={setTaskLists} taskList={taskList} />;
+                return (
+                  <SideItem
+                    key={i}
+                    i={i}
+                    taskLists={taskLists}
+                    selected={i == id}
+                    setTaskLists={setTaskLists}
+                    taskList={taskList}
+                  />
+                );
               })
             ) : (
               <div className="message">No task lists. Create one below!</div>
@@ -52,7 +61,9 @@ function Tasks() {
         {taskLists[id] ? (
           <TaskPage taskLists={taskLists} setTaskLists={setTaskLists} id={parseInt(id) || 0} />
         ) : (
-          <div className="message" style={{paddingLeft:"200px"}}>Create a new task list!</div>
+          <div className="message" style={{ paddingLeft: "200px" }}>
+            Create a new task list!
+          </div>
         )}
       </div>
     </motion.div>

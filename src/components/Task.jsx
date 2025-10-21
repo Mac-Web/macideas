@@ -23,7 +23,7 @@ function Task({ task, tasks, setTasks, star, priority, tag, id, labels, setLabel
 
   useEffect(() => {
     const handleClick = (e) => {
-      if (!calendarRef.current.contains(e.target) && e.target !== dateIconRef.current) {
+      if (!calendarRef.current?.contains(e.target) && e.target !== dateIconRef.current) {
         setCalendar(false);
       }
     };

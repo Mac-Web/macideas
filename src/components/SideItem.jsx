@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
-function SideItem({ taskLists, setTaskLists, taskList, i }) {
+function SideItem({ taskLists, setTaskLists, taskList, i, selected = false }) {
   const [emoji, setEmoji] = useState(false);
   const [emojiDisplay, setEmojiDisplay] = useState("📃");
   const [editing, setEditing] = useState(false);
@@ -58,7 +58,7 @@ function SideItem({ taskLists, setTaskLists, taskList, i }) {
   }
 
   return (
-    <Link to={`/tasks/${i}`} className="sidebar-item">
+    <Link to={`/tasks/${i}`} className={`sidebar-item ${selected ? "sidebar-selected" : ""}`}>
       <div className="sidebar-item-emoji" title="Pick emoji" ref={emojiIcon} onClick={() => setEmoji(true)}>
         {taskList.emoji || emojiDisplay}
       </div>
