@@ -2,6 +2,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Task from "../components/Task";
 import TaskIcon from "./TaskIcon";
 import LabelList from "./LabelList";
@@ -22,11 +23,13 @@ function TaskPage({ taskLists, setTaskLists, id }) {
   const [date, setDate] = useState(null);
   const [filterValue, setFilterValue] = useState("all");
   const [filteredTasks, setFilteredTasks] = useState(tasks.tasks);
-  const [sortValue, setSortValue] = useState("create");
+  const [sortValue, setSortValue] = useState("custom");
+  const [search, setSearch] = useState("");
   //TODO: change it to only one state managing all the properties of the new task
   const iconRef = useRef();
   const calendarRef = useRef();
   const dateIconRef = useRef();
+  const searchRef = useRef();
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -173,10 +176,42 @@ function TaskPage({ taskLists, setTaskLists, id }) {
     }
   }
 
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
+    if (sortValue === "custom" && filterValue === "all") {
+      const newItems = Array.from(tasks.tasks);
+      const [reorderedItem] = newItems.splice(result.source.index, 1);
+      newItems.splice(result.destination.index, 0, reorderedItem);
+      setTasks({ ...tasks, tasks: newItems });
+      setFilteredTasks(newItems);
+    }
+  };
+
   return (
     <div className="tasks-content">
       <div className="tasks-filters">
-        <input type="text" placeholder={"Search tasks in " + taskLists[id].name} className="filter-bar" />
+        <div className="filter-search">
+          <input
+            type="text"
+            placeholder={"Search tasks in " + taskLists[id].name}
+            value={search}
+            onInput={(e) => setSearch(e.target.value)}
+            className="filter-bar"
+            ref={searchRef}
+          />
+          {search.length > 0 && (
+            <motion.img
+              whileHover={{ scale: 1.2, y: -2 }}
+              src="/macideas/icons/close.svg"
+              title="Clear search"
+              className="search-icon"
+              onClick={() => {
+                setSearch("");
+                searchRef.current.focus();
+              }}
+            />
+          )}
+        </div>
         <div className="tasks-filter">
           <img src="/macideas/icons/filter.svg" title="Filter by" className="filter-icon" />
           <select className="filter-dropdown" value={filterValue} onChange={(e) => setFilterValue(e.target.value)}>
@@ -190,6 +225,7 @@ function TaskPage({ taskLists, setTaskLists, id }) {
         <div className="tasks-filter">
           <img src="/macideas/icons/sort.svg" title="Sort by" className="filter-icon" />
           <select className="filter-dropdown" value={sortValue} onChange={(e) => setSortValue(e.target.value)}>
+            <option value="custom">Custom</option>
             <option value="create">Date created</option>
             <option value="priority">Priority</option>
             <option value="date">Due date</option>
@@ -200,31 +236,48 @@ function TaskPage({ taskLists, setTaskLists, id }) {
       </div>
       <div className="tasks-lists">
         <div className="tasks-list">
-          <AnimatePresence mode="sync">
-            {filteredTasks.length > 0 ? (
-              filteredTasks.map((task, i) => {
-                return (
-                  <Task
-                    key={i}
-                    task={task.task}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    priority={task.priority || 0}
-                    tag={task.labels}
-                    star={task.starred}
-                    id={task.id}
-                    labels={labels}
-                    setLabels={setLabels}
-                    time={task.date ? task.date : null}
-                  />
-                );
-              })
-            ) : (
-              <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
-                No tasks added. Create one below!
-              </motion.div>
-            )}
-          </AnimatePresence>
+          <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided) => (
+                <div className="drag-list" {...provided.droppableProps} ref={provided.innerRef}>
+                  <AnimatePresence mode="sync" {...provided.droppableProps} ref={provided.innerRef}>
+                    {filteredTasks.length > 0 ? (
+                      filteredTasks
+                        .filter((task) => task.task.toLowerCase().includes(search.toLowerCase()))
+                        .map((task, i) => {
+                          return (
+                            <Draggable key={i} draggableId={i.toString()} index={i}>
+                              {(provided) => (
+                                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                  <Task
+                                    key={i}
+                                    task={task.task}
+                                    tasks={tasks}
+                                    setTasks={setTasks}
+                                    priority={task.priority || 0}
+                                    tag={task.labels}
+                                    star={task.starred}
+                                    id={task.id}
+                                    labels={labels}
+                                    setLabels={setLabels}
+                                    time={task.date ? task.date : null}
+                                  />
+                                </div>
+                              )}
+                            </Draggable>
+                          );
+                        })
+                    ) : (
+                      <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} layout className="message">
+                        No tasks added. Create one below!
+                      </motion.div>
+                    )}
+                    {provided.placeholder}
+                  </AnimatePresence>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
         {completed && (
           <div className="tasks-completed">
